@@ -1,78 +1,60 @@
-import { Github, Linkedin, Mail, Terminal, Server, Cpu, Database } from 'lucide-qwik';
-
-export const PROFILE = {
-  name: "Harshit Singh",
-  role: "Backend Systems Engineer",
-  location: "Bengaluru, India",
-  tagline: "Architecting scalable distributed systems & high-throughput infrastructure.",
-  social: [
-    { label: "GitHub", href: "https://github.com/seriouspoop", icon: Github },
-    { label: "LinkedIn", href: "https://linkedin.com/in/harshit-me", icon: Linkedin },
-    { label: "Email", href: "mailto:workmail.harshitsingh@gmail.com", icon: Mail },
+export const DATA = {
+  profile: {
+    name: "Harshit Singh",
+    role: "Backend & Systems Engineer",
+    tagline: "Architecting scalable distributed systems and optimizing high-throughput infrastructure.",
+    links: {
+      github: "https://github.com/seriouspoop",
+      linkedin: "https://linkedin.com/in/harshit-me",
+      email: "mailto:workmail.harshitsingh@gmail.com"
+    }
+  },
+  experience: [
+    {
+      company: "Piovation GmbH",
+      role: "Backend Architect",
+      period: "Dec 2024 - Aug 2025",
+      description: "Architected real-time SSH connection pooling achieving 115% performance boost. Implemented full-stack OpenTelemetry tracing and designed gRPC gateways for microservice orchestration.",
+      tech: ["Go", "gRPC", "OpenTelemetry"]
+    },
+    {
+      company: "RabbitLoader",
+      role: "Systems Engineer",
+      period: "May 2024 - Oct 2024",
+      description: "Optimized Redis distributed caching strategy resulting in 40% load reduction. Managed container orchestration via Docker Swarm and standardized internal gRPC communication protocols.",
+      tech: ["Redis", "Docker Swarm", "Lua"]
+    }
+  ],
+  projects: [
+    {
+      name: "GoPush",
+      description: "Interactive Command-line Git Manager built to simplify complex branching strategies.",
+      icon: "Terminal",
+      tech: ["Go", "CLI", "Git Internals"]
+    },
+    {
+      name: "SysArch Ops",
+      description: "High-availability deployment optimization scripts ensuring 99.9% system uptime.",
+      icon: "Server",
+      tech: ["Bash", "Linux", "CI/CD"]
+    },
+    {
+      name: "AlgoBench",
+      description: "High-performance benchmarking tool for analyzing algorithm efficiency and memory allocation patterns.",
+      icon: "Cpu",
+      tech: ["Go", "Performance", "Data Structures"]
+    },
+    {
+      name: "Observer",
+      description: "Go SDK for OpenTelemetry designed for collecting real-time metrics and traces across microservices.",
+      icon: "Activity",
+      tech: ["Go", "OpenTelemetry", "SDK"]
+    }
+  ],
+  skills: [
+    { category: "Languages", items: ["Go", "Rust", "C", "Bash"] },
+    { category: "Orchestration & Ops", items: ["Kubernetes", "Docker Swarm", "Linux", "Helm", "Terraform"] },
+    { category: "Distributed Systems", items: ["gRPC", "Kafka", "RabbitMQ", "OpenTelemetry", "Grafana", "Prometheus"] },
+    { category: "Data Persistence", items: ["PostgreSQL", "Redis", "Valkey", "MongoDB"] }
   ]
 };
-
-export const EXPERIENCE = [
-  {
-    company: "Piovation GmbH",
-    role: "Software Engineer",
-    period: "Dec 2024 – Aug 2025",
-    description: "Architected real-time infrastructure and optimized critical system architecture.",
-    achievements: [
-      "Implemented real-time SSH connection pooling, boosting performance by 115% (8K to 17K req/sec).",
-      "Built high-throughput gateway layer with gRPC streams for API-to-Linux command conversion.",
-      "Led OpenTelemetry implementation reducing debugging time by 40%.",
-      "Standardized Protobuf/gRPC practices to improve development velocity."
-    ]
-  },
-  {
-    company: "RabbitLoader",
-    role: "Backend Developer Intern",
-    period: "May 2024 – Oct 2024",
-    description: "Engineered distributed caching systems and event-driven microservices.",
-    achievements: [
-      "Engineered Redis-based distributed caching, reducing DB load by 40%.",
-      "Implemented event-driven architecture via RabbitMQ, increasing reliability by 30%.",
-      "Orchestrated Docker Swarm deployments with automated health checks.",
-      "Developed high-performance gRPC protocols with connection pooling."
-    ]
-  }
-];
-
-export const PROJECTS = [
-  {
-    title: "GoPush CLI",
-    tech: ["Go", "Git Internals", "Linux"],
-    icon: Terminal,
-    description: "Interactive Command-line Git Manager. Open-source tool supporting HTTP/SSH protocols, secure storage, and automated authentication workflows reducing manual time by 60%."
-  },
-  {
-    title: "SysArch Ops",
-    tech: ["Docker Swarm", "Bash", "CI/CD"],
-    icon: Server,
-    description: "High-availability deployment orchestration scripts ensuring 99.9% uptime across production environments during peak loads."
-  }
-];
-
-export const SKILLS = [
-  { 
-    category: "Languages", 
-    items: ["Go", "Java", "Kotlin", "Python", "TypeScript", "SQL", "Bash"],
-    icon: Terminal 
-  },
-  { 
-    category: "Backend & Systems", 
-    items: ["gRPC", "Microservices", "Protocol Buffers", "Event-Driven Arch", "System Design"],
-    icon: Cpu 
-  },
-  { 
-    category: "Infrastructure", 
-    items: ["Docker", "Kubernetes", "AWS", "RabbitMQ", "Kafka", "OpenTelemetry"],
-    icon: Server 
-  },
-  { 
-    category: "Data", 
-    items: ["Redis", "PostgreSQL", "MySQL", "MongoDB", "Query Optimization"],
-    icon: Database 
-  }
-];

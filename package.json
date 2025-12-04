@@ -31,6 +31,7 @@
     "eslint": "9.32.0",
     "eslint-plugin-qwik": "^1.17.2",
     "globals": "16.4.0",
+    "lucide-qwik": "^1.0.0",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.1.4",
@@ -42,7 +43,8 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "dependencies": {
-    "lucide-qwik": "^1.0.0",
-    "motion": "^12.23.25"
+    "@types/three": "^0.181.0",
+    "motion": "^12.23.25",
+    "three": "^0.181.2"
   }
 }
