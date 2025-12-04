@@ -136,7 +136,6 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-
   title: "Harshit Singh",
   meta: [
     {
@@ -147,7 +146,8 @@ export const head: DocumentHead = {
   links: [
     {
       rel: "icon",
-      href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>",
+      type: "image/svg+xml",
+      href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E",
     },
   ],
 };
