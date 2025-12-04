@@ -1,4 +1,5 @@
 import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { DATA } from '../data';
 import { ThreeBackground } from '../components/three-background';
 import { LoadBalancerGame } from '../components/load-balancer-game';
@@ -133,3 +134,20 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+
+  title: "Harshit Singh",
+  meta: [
+    {
+      name: "description",
+      content: "Backend & Systems Engineer Portfolio",
+    },
+  ],
+  links: [
+    {
+      rel: "icon",
+      href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>",
+    },
+  ],
+};
