@@ -11,8 +11,8 @@ export const ThreeBackground = component$(() => {
     const particleCount = 120;
     const connectDistance = 2.5;
     const moveSpeed = 0.008;
-    const mouseRepulsionRadius = 4.0; // Increased radius for softer falloff
-    const mouseRepulsionForce = 0.002; // significantly reduced force for gentle push
+    const mouseRepulsionRadius = 3.0; // Increased radius for softer falloff
+    const mouseRepulsionForce = 0.001; // significantly reduced force for gentle push
 
     // --- VARIABLES ---
     let mouseX = 0;
