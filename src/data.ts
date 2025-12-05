@@ -12,17 +12,17 @@ export const DATA = {
   experience: [
     {
       company: "Piovation GmbH",
-      role: "Backend Architect",
+      role: "Software Engineer",
       period: "Dec 2024 - Aug 2025",
       description: "Architected real-time SSH connection pooling achieving 115% performance boost. Implemented full-stack OpenTelemetry tracing and designed gRPC gateways for microservice orchestration.",
       tech: ["Go", "gRPC", "OpenTelemetry"]
     },
     {
       company: "RabbitLoader",
-      role: "Systems Engineer",
+      role: "Backend Developer Intern",
       period: "May 2024 - Oct 2024",
       description: "Optimized Redis distributed caching strategy resulting in 40% load reduction. Managed container orchestration via Docker Swarm and standardized internal gRPC communication protocols.",
-      tech: ["Redis", "Docker Swarm", "Lua"]
+      tech: ["Redis", "Docker", "Go", "RabbitMQ"]
     }
   ],
   projects: [
