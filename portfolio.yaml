@@ -1,0 +1,167 @@
+meta:
+  name: Harshit Singh Portfolio
+  description: Backend & Systems Engineer using Qwik and Three.js
+  theme: dark
+
+profile:
+  component: hero
+  name: Harshit Singh
+  role: Backend & Systems Engineer
+  tagline: Architecting scalable distributed systems and optimizing high-throughput infrastructure.
+  links:
+    - type: github
+      url: https://github.com/seriouspoop
+    - type: linkedin
+      url: https://linkedin.com/in/harshit-me
+    - type: email
+      url: mailto:workmail.harshitsingh@gmail.com
+
+sections:
+  - id: experience
+    title: Experience
+    component: timeline
+    layout: vertical
+    items:
+      - component: experience_card
+        clickable: true
+        interaction: expand
+        company: Aurva
+        company_url: https://www.aurva.io
+        role: DevOps Intern
+        period: Dec 2025 - Present
+        location: Bengaluru
+        summary: Architecting real-time SSH connection pooling achieving 115% performance boost. Implemented full-stack OpenTelemetry tracing and designed gRPC gateways for microservice orchestration.
+        tech: [Go, gRPC, OpenTelemetry]
+        # details: 
+        #   - Built a high-performance SSH connection pooler using Go, achieving 115% performance improvement over the existing solution through intelligent resource multiplexing and connection lifecycle optimization.
+        #   - Engineered a comprehensive OpenTelemetry instrumentation layer for distributed systems, enabling end-to-end visibility across microservices and reducing mean time to resolution by 60%.
+        #   - Designed and implemented gRPC-based service mesh communication protocols, ensuring type-safe inter-service communication and fault-tolerant request handling.
+
+      - component: experience_card
+        clickable: false
+        interaction: expand
+        company: Piovation GmbH
+        company_url: https://www.piovation.com/
+        role: Software Engineer
+        period: Dec 2024 - Aug 2025
+        location: Germany
+        summary: Architected real-time SSH connection pooling achieving 115% performance boost. Implemented full-stack OpenTelemetry tracing and designed gRPC gateways for microservice orchestration.
+        tech: [Go, gRPC, OpenTelemetry]
+
+      - component: experience_card
+        clickable: false
+        interaction: expand
+        company: Dofollo Ai
+        company_url: https://dofollo.ai/
+        role: Backend Developer Intern
+        period: May 2024 - Oct 2024
+        location: Remote
+        summary: Optimized Redis distributed caching strategy resulting in 40% load reduction. Managed container orchestration via Docker Swarm and standardized internal gRPC communication protocols.
+        tech: [Redis, Docker, Go, RabbitMQ]
+
+  - id: projects
+    title: Engineering
+    component: grid
+    layout: grid
+    columns: 2
+    items:
+      - component: project_card
+        clickable: false
+        interaction: modal
+        name: GoPush
+        tagline: Interactive Command-line Git Manager built to simplify complex branching strategies.
+        icon: Terminal
+        summary: Interactive Command-line Git Manager built to simplify complex branching strategies.
+        tech: [Go, CLI, Git Internals]
+
+      - component: project_card
+        clickable: false
+        interaction: modal
+        name: SysArch Ops
+        tagline: High-availability deployment optimization scripts ensuring 99.9% system uptime.
+        icon: Server
+        summary: High-availability deployment optimization scripts ensuring 99.9% system uptime.
+        tech: [Bash, Linux, CI/CD]
+
+      - component: project_card
+        clickable: false
+        interaction: modal
+        name: AlgoBench
+        tagline: High-performance benchmarking tool for analyzing algorithm efficiency and memory allocation patterns.
+        icon: Cpu
+        summary: High-performance benchmarking tool for analyzing algorithm efficiency and memory allocation patterns.
+        tech: [Go, Performance, Data Structures]
+
+      - component: project_card
+        clickable: false
+        interaction: modal
+        name: Observer
+        tagline: Go SDK for OpenTelemetry designed for collecting real-time metrics and traces across microservices.
+        icon: Activity
+        summary: Go SDK for OpenTelemetry designed for collecting real-time metrics and traces across microservices.
+        tech: [Go, OpenTelemetry, SDK]
+
+  - id: skills
+    title: Stack
+    component: skill_grid
+    layout: categorized
+    items:
+      - category: Languages
+        icon: Code
+        items:
+          - name: Go
+            level: advanced
+          - name: Rust
+            level: beginner
+          - name: C
+            level: intermediate
+          - name: Bash
+            level: advanced
+
+      - category: Orchestration & Ops
+        icon: Container
+        items:
+          - name: Kubernetes
+            level: advanced
+          - name: Docker Swarm
+            level: advanced
+          - name: Linux
+            level: advanced
+          - name: Helm
+            level: advanced
+          - name: Terraform
+            level: advanced
+
+      - category: Distributed Systems
+        icon: Network
+        items:
+          - name: gRPC
+            level: advanced
+          - name: Kafka
+            level: beginner
+          - name: RabbitMQ
+            level: advanced
+          - name: OpenTelemetry
+            level: advanced
+          - name: Grafana
+            level: advanced
+          - name: Prometheus
+            level: advanced
+
+      - category: Data Persistence
+        icon: Database
+        items:
+          - name: PostgreSQL
+            level: advanced
+          - name: Redis
+            level: advanced
+          - name: Valkey
+            level: advanced
+          - name: TimescaleDB
+            level: advanced
+          - name: MongoDB
+            level: intermediate
+          - name: PebbleDB
+            level: beginner
+          
+            
