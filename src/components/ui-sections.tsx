@@ -1,14 +1,33 @@
 import { component$, Slot } from '@builder.io/qwik';
 
+export const cardBase =
+  'backdrop-blur-sm bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 group rounded-lg';
+
 export const SectionTitle = component$(() => (
   <h2 class="text-2xl md:text-3xl font-mono font-bold text-white mb-8 flex items-center gap-3">
     <span class="text-emerald-500">➜</span> <Slot />
   </h2>
 ));
 
-export const SkillTag = component$(({ skill }: { skill: string }) => (
-  <span class="px-3 py-1 text-sm font-mono text-emerald-400 border border-emerald-500/30 bg-emerald-950/20 rounded hover:bg-emerald-500/10 transition-colors cursor-default">
-    {skill}
+const levelColor: Record<string, string> = {
+  expert:       'text-emerald-400',
+  advanced:     'text-emerald-600',
+  intermediate: 'text-zinc-400',
+  beginner:     'text-zinc-600',
+};
+
+export const SkillTag = component$(({ skill, level }: { skill: string; level?: string }) => (
+  <span class="group inline-flex items-center px-3 py-1 text-sm font-mono text-emerald-400 border border-emerald-500/30 bg-emerald-950/20 rounded hover:bg-emerald-500/10 transition-all duration-300 cursor-default">
+    <span class="whitespace-nowrap">{skill}</span>
+    {level && (
+      <span class="grid grid-cols-[0fr] group-hover:grid-cols-[1fr] transition-[grid-template-columns] duration-300 ease-in-out">
+        <span class="overflow-hidden">
+          <span class={`inline-block pl-1.5 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${levelColor[level] ?? 'text-zinc-500'}`}>
+            {level}
+          </span>
+        </span>
+      </span>
+    )}
   </span>
 ));
 

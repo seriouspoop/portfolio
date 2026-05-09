@@ -1,0 +1,220 @@
+meta:
+  name: Harshit Singh Portfolio
+  description: Backend & Systems Engineer using Qwik and Three.js
+  theme: dark
+
+profile:
+  component: hero
+  name: Harshit Singh
+  role: Backend & Systems Engineer
+  tagline: Architecting scalable distributed systems and optimizing high-throughput infrastructure.
+  links:
+    - type: github
+      url: https://github.com/seriouspoop
+    - type: linkedin
+      url: https://linkedin.com/in/harshit-me
+    - type: email
+      url: mailto:workmail.harshitsingh@gmail.com
+
+sections:
+  - id: experience
+    title: Experience
+    component: timeline
+    layout: vertical
+    items:
+      - component: experience_card
+        clickable: true
+        interaction: modal
+        company: Aurva
+        company_url: https://www.aurva.io
+        role: DevOps Intern
+        period: Dec 2025 - Present
+        location: Bengaluru
+        summary: Built production-grade multi-cloud deployment infrastructure reducing customer onboarding time by 96% across AWS, GCP, and air-gapped environments. Delivered 8 components spanning Helm chart libraries, Terraform modules, and hardened Bash automation.
+        tech: [Terraform, Helm, Kubernetes, AWS, GCP, Bash, eBPF]
+        details:
+          - Designed aurva-helm-commons, a centralized Helm chart library orchestrating 15+ microservices across any Kubernetes cluster with IRSA/Workload Identity federation and AWS Secrets Manager CSI integration — reducing new environment deployment from requiring a Helm expert to editing a single values file.
+          - Built end-to-end AWS control plane provisioning (Terraform + Helm) covering VPC, EKS, RDS, OpenSearch, IAM, S3, Secrets Manager, and CloudTrail — including full air-gapped mode via AWS PrivateLink VPC endpoints. Fresh deployment time dropped from 2-3 days to under 45 minutes.
+          - Authored cross-account IAM Terraform module using OIDC-based IRSA federation with aws:SourceVpc conditions, eliminating long-lived credentials and reducing a 2-3 hour manual setup to a 5-minute terraform apply.
+          - Implemented GCP data plane deployment with Workload Identity, GCS bucket provisioning, and optional tainted node pool attachment to existing GKE clusters — enabling multi-cloud support without per-customer manual playbooks.
+          - Wrote hardened Bash installers (eBPF collector, DBProxy, PostgreSQL 18) for standalone Linux servers with preflight validation, retry logic with exponential backoff, rollback, and dual CDN/air-gapped download paths — cutting standalone server onboarding from 4-8 hours to under 10 minutes.
+
+      - component: experience_card
+        clickable: true
+        interaction: modal
+        company: Piovation GmbH
+        company_url: https://www.piovation.com/
+        role: Software Engineer
+        period: Dec 2024 - Aug 2025
+        location: Remote
+        summary: Architected real-time SSH connection pooling achieving 115% performance boost (8K to 17K req/s). Built gRPC gateway layer for hardware communication and led full-stack OpenTelemetry instrumentation cutting debugging time by 40%.
+        tech: [Go, gRPC, OpenTelemetry, Protobuf]
+        details:
+          - Architected and implemented real-time SSH connection pooling system for remote Linux servers, achieving 115% performance improvement (8K to 17K requests/sec) and reducing resource overhead.
+          - Built scalable high-throughput gateway layer with gRPC streams for seamless hardware communication and efficient API-to-Linux command conversion across distributed infrastructure.
+          - Led comprehensive OpenTelemetry implementation for distributed tracing and metrics collection, reducing system debugging time by 40% and improving operational visibility.
+          - Established standardized protobuf and gRPC best practices across multiple engineering teams, improving code maintainability, development velocity, and reducing integration complexity.
+          - Optimized critical system architecture for high-availability deployment scenarios, ensuring consistent 99.9% uptime across production environments and handling peak traffic loads.
+
+      - component: experience_card
+        clickable: true
+        interaction: modal
+        company: RabbitLoader
+        company_url: https://rabbitloader.com/
+        role: Backend Developer Intern
+        period: May 2024 - Oct 2024
+        location: Remote
+        summary: Engineered Redis-based distributed caching cutting database load by 40%. Designed RabbitMQ event-driven architecture improving reliability by 30% and built Docker Swarm orchestration reducing service downtime by 50%.
+        tech: [Go, Redis, RabbitMQ, Docker, gRPC]
+        details:
+          - Engineered comprehensive Redis-based distributed caching system with intelligent cache invalidation strategies, reducing database load by 40% and significantly improving application response times.
+          - Designed and implemented robust event-driven architecture using RabbitMQ message queues, increasing overall system reliability by 30% through decoupled logging, mailing, and notification services.
+          - Orchestrated containerized microservices deployment using Docker and Docker Swarm with automated health checks, achieving 50% reduction in service downtime during critical deployments and updates.
+          - Developed high-performance gRPC communication protocols with auto-generated client-server stubs and connection pooling, improving inter-service communication efficiency by 20% and reducing latency.
+          - Built and deployed automated Go cron scheduling module for incremental billing operations and URL crawling tasks, increasing scheduling accuracy by 25% and reducing manual intervention.
+
+  - id: projects
+    title: Engineering
+    component: grid
+    layout: grid
+    columns: 2
+    items:
+      - component: project_card
+        clickable: true
+        interaction: modal
+        name: GoPush
+        tagline: Interactive Command-line Git Manager
+        icon: Terminal
+        summary: Interactive Command-line Git Manager built to simplify complex branching strategies.
+        details:
+          - "Interactive TUI for staging, committing, and pushing without memorizing git flags"
+          - "Branch strategy visualizer with tree-based diff display"
+          - "Built with Bubble Tea and Lip Gloss for rich terminal rendering"
+        links:
+          - type: github
+            url: https://github.com/seriouspoop/gopush
+        tech: [Go, CLI, Git Internals]
+
+      - component: project_card
+        clickable: false
+        interaction: modal
+        name: SysArch Ops
+        tagline: HA Deployment Optimization
+        icon: Server
+        summary: High-availability deployment optimization scripts ensuring 99.9% system uptime.
+        tech: [Bash, Linux, CI/CD]
+
+      - component: project_card
+        clickable: true
+        interaction: modal
+        name: AlgoBench
+        tagline: Benchmarking tool for algorithms
+        icon: Cpu
+        summary: High-performance benchmarking tool for analyzing algorithm efficiency and memory allocation patterns.
+        details:
+          - "Go-based implementations of core data structures, including array manipulations and singly/doubly linked lists"
+          - "Built-in performance benchmarking suite to compare algorithmic efficiencies, such as manual array element shifting versus Go's native copy() function"
+          - "Incorporates modern Go paradigms like custom iterator functions (using yield) for traversal, fully backed by unit tests using the testify framework"
+        links:
+          - type: github
+            url: https://github.com/seriouspoop/AlgoBench
+        tech: [Go, Performance, Data Structures]
+
+      - component: project_card
+        clickable: true
+        interaction: modal
+        name: Observer
+        tagline: OpenTelemetry SDK
+        icon: Observe
+        summary: Go SDK for OpenTelemetry designed for collecting real-time metrics and traces across microservices.
+        details:
+          - "Unified OpenTelemetry Go SDK wrapper consolidating tracing, metrics, and logging into a single Observer instance"
+          - "Out-of-the-box exporter configurations for quick development (Console stdout) and production (OTLP gRPC/HTTP) setups"
+          - "Built-in instrumentation integrations including Gorilla Mux HTTP middleware and structured logging via otelzap"
+        links:
+          - type: github
+            url: https://github.com/seriouspoop/observer
+        tech: [Go, OpenTelemetry, SDK]
+
+  - id: skills
+    title: Stack
+    component: skill_grid
+    layout: categorized
+    items:
+      - category: Languages
+        icon: Code
+        items:
+          - name: Go
+            level: advanced
+          - name: Rust
+            level: beginner
+          - name: C
+            level: intermediate
+          - name: Bash
+            level: advanced
+
+      - category: Orchestration & Ops
+        icon: Container
+        items:
+          - name: Kubernetes
+            level: advanced
+          - name: Docker Swarm
+            level: advanced
+          - name: Podman
+            level: advanced
+          - name: Linux
+            level: advanced
+          - name: CI/CD
+            level: advanced
+          - name: Helm
+            level: advanced
+          - name: Terraform
+            level: advanced
+          - name: GitHub Actions
+            level: advanced
+          - name: Jenkins
+            level: intermediate
+
+      - category: Distributed Systems
+        icon: Network
+        items:
+          - name: gRPC
+            level: advanced
+          - name: Kafka
+            level: beginner
+          - name: RabbitMQ
+            level: advanced
+          - name: OpenTelemetry
+            level: advanced
+          - name: Grafana
+            level: advanced
+          - name: Prometheus
+            level: advanced
+
+      - category: Data Persistence
+        icon: Database
+        items:
+          - name: PostgreSQL
+            level: advanced
+          - name: Redis
+            level: advanced
+          - name: Valkey
+            level: advanced
+          - name: TimescaleDB
+            level: advanced
+          - name: MongoDB
+            level: intermediate
+          - name: PebbleDB
+            level: beginner
+
+      - category: Cloud & Infrastructure
+        icon: Cloud
+        items:
+          - name: AWS
+            level: advanced
+          - name: GCP
+            level: intermediate
+          - name: On-prem
+            level: advanced
+          
+            
