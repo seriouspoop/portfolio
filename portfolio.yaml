@@ -96,12 +96,17 @@ sections:
         tech: [Go, CLI, Git Internals]
 
       - component: project_card
-        clickable: false
+        clickable: true
         interaction: modal
         name: SysArch Ops
         tagline: HA Deployment Optimization
         icon: Server
         summary: High-availability deployment optimization scripts ensuring 99.9% system uptime.
+        details:
+          - "Created comprehensive Bash scripts to automate high-availability (HA) deployments for NGINX, Redis, and PostgreSQL clusters across Ubuntu and Amazon Linux servers"
+          - "Implemented failover orchestration with automatic health checks, automatic service restart, and manual/automatic VIP (Virtual IP) migration between nodes"
+          - "Integrated custom monitoring agents for real-time service availability checks and added multi-cloud compatibility by adding support for AWS and GCP environments"
+          - "Optimized deployment workflows to reduce setup time from hours to minutes while ensuring idempotent operations and zero data loss during failovers"
         tech: [Bash, Linux, CI/CD]
 
       - component: project_card
