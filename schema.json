@@ -546,7 +546,9 @@
                         "Code",
                         "Container",
                         "Network",
-                        "Database"
+                        "Database",
+                        "Cloud",
+                        "Observe"
                     ],
                     "examples": [
                         "Terminal"
@@ -700,7 +702,9 @@
                         "Server",
                         "Terminal",
                         "Cpu",
-                        "Activity"
+                        "Activity",
+                        "Cloud",
+                        "Observe"
                     ],
                     "examples": [
                         "Code"

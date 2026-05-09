@@ -11,6 +11,8 @@ import {
   ChevronDownIcon,
   XIcon,
   ArrowUpRightIcon,
+  CloudIcon,
+  BugIcon
 } from 'lucide-qwik';
 
 export { ChevronDownIcon, XIcon, ArrowUpRightIcon, ActivityIcon };
@@ -24,6 +26,8 @@ const iconMap: Record<string, any> = {
   Container: BoxesIcon,
   Network:  NetworkIcon,
   Database: DatabaseIcon,
+  Cloud:    CloudIcon,
+  Observe: BugIcon
 };
 
 export const PortfolioIcon = component$(
