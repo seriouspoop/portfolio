@@ -5,8 +5,9 @@ import { ThreeBackground } from '../components/three-background';
 import { LoadBalancerGame } from '../components/load-balancer-game';
 import { SectionTitle, SkillTag, SocialLink } from '../components/ui-sections';
 import { isTimelineSection, isGridSection, isSkillGridSection } from '../types/components';
-
-const cardBase = 'backdrop-blur-sm bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 group rounded-lg';
+import { ExperienceCardComponent } from '../components/experience-card';
+import { ProjectCardComponent } from '../components/project-card';
+import { PortfolioIcon } from '../components/portfolio-icon';
 
 export default component$(() => {
   const loaded = useSignal(false);
@@ -60,27 +61,7 @@ export default component$(() => {
                 <SectionTitle>{experienceSection.title}</SectionTitle>
                 <div class="space-y-6">
                   {experienceSection.items.map((job, idx) => (
-                    <div key={idx} class={`${cardBase} p-6 relative overflow-hidden`}>
-                      {job.logo && (
-                        <img src={job.logo} alt={job.company} width="40" height="40" class="absolute top-4 right-4 w-10 h-10 object-contain opacity-40 group-hover:opacity-70 transition-opacity" />
-                      )}
-                      <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                        <h3 class="text-xl font-bold text-white">{job.role}</h3>
-                        <span class="font-mono text-sm text-emerald-500/80">{job.period}</span>
-                      </div>
-                      <div class="text-lg text-zinc-400 font-medium mb-4">
-                        {job.company_url
-                          ? <a href={job.company_url} target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">{job.company}</a>
-                          : job.company}
-                        {job.location && <span class="text-zinc-600 font-normal text-sm ml-2">· {job.location}</span>}
-                      </div>
-                      <p class="text-zinc-400 mb-4 leading-relaxed max-w-3xl">{job.summary}</p>
-                      <div class="flex flex-wrap gap-2">
-                        {job.tech.map((t, i) => (
-                          <span key={i} class="text-xs font-mono text-zinc-500 border border-zinc-800 px-2 py-0.5 rounded">{t}</span>
-                        ))}
-                      </div>
-                    </div>
+                    <ExperienceCardComponent key={idx} job={job} />
                   ))}
                 </div>
               </>
@@ -98,15 +79,7 @@ export default component$(() => {
                 <SectionTitle>{projectsSection.title}</SectionTitle>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {projectsSection.items.map((project, idx) => (
-                    <div key={idx} class={`${cardBase} p-6 h-full flex flex-col`}>
-                      <h3 class="text-lg font-bold text-white mb-4">{project.name}</h3>
-                      <p class="text-zinc-400 mb-6 flex-grow">{project.summary}</p>
-                      <div class="flex flex-wrap gap-2 pt-4 border-t border-zinc-800">
-                        {project.tech.map((t, i) => (
-                          <span key={i} class="text-xs font-mono text-zinc-500">#{t}</span>
-                        ))}
-                      </div>
-                    </div>
+                    <ProjectCardComponent key={idx} project={project} />
                   ))}
                 </div>
               </>
@@ -125,7 +98,10 @@ export default component$(() => {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {skillsSection.items.map((grp, idx) => (
                     <div key={idx}>
-                      <h3 class="text-emerald-500/80 font-mono text-xs mb-3 uppercase tracking-wider border-l-2 border-emerald-500/30 pl-3">
+                      <h3 class="flex items-center gap-2 text-emerald-500/80 font-mono text-xs mb-3 uppercase tracking-wider border-l-2 border-emerald-500/30 pl-3">
+                        <span class="opacity-60">
+                          <PortfolioIcon name={grp.icon} size={12} />
+                        </span>
                         {grp.category}
                       </h3>
                       <div class="flex flex-wrap gap-2">

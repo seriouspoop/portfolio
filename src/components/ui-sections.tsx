@@ -1,5 +1,8 @@
 import { component$, Slot } from '@builder.io/qwik';
 
+export const cardBase =
+  'backdrop-blur-sm bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 group rounded-lg';
+
 export const SectionTitle = component$(() => (
   <h2 class="text-2xl md:text-3xl font-mono font-bold text-white mb-8 flex items-center gap-3">
     <span class="text-emerald-500">➜</span> <Slot />

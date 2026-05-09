@@ -1,3 +1,36 @@
 @import "tailwindcss";
 
+dialog {
+  border: none;
+  padding: 0;
+  max-height: 90vh;
+  overflow: hidden;
+  color: inherit;
+  /* Tailwind preflight resets UA margin:auto; restore centering */
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+dialog[open] {
+  animation: dialog-pop 0.2s ease-out;
+}
+
+@keyframes dialog-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 

@@ -24,7 +24,7 @@ sections:
     items:
       - component: experience_card
         clickable: true
-        interaction: expand
+        interaction: modal
         company: Aurva
         company_url: https://www.aurva.io
         role: DevOps Intern
@@ -32,10 +32,10 @@ sections:
         location: Bengaluru
         summary: Architecting real-time SSH connection pooling achieving 115% performance boost. Implemented full-stack OpenTelemetry tracing and designed gRPC gateways for microservice orchestration.
         tech: [Go, gRPC, OpenTelemetry]
-        # details: 
-        #   - Built a high-performance SSH connection pooler using Go, achieving 115% performance improvement over the existing solution through intelligent resource multiplexing and connection lifecycle optimization.
-        #   - Engineered a comprehensive OpenTelemetry instrumentation layer for distributed systems, enabling end-to-end visibility across microservices and reducing mean time to resolution by 60%.
-        #   - Designed and implemented gRPC-based service mesh communication protocols, ensuring type-safe inter-service communication and fault-tolerant request handling.
+        details:
+          - Built a high-performance SSH connection pooler using Go, achieving 115% performance improvement over the existing solution through intelligent resource multiplexing and connection lifecycle optimization.
+          - Engineered a comprehensive OpenTelemetry instrumentation layer for distributed systems, enabling end-to-end visibility across microservices and reducing mean time to resolution by 60%.
+          - Designed and implemented gRPC-based service mesh communication protocols, ensuring type-safe inter-service communication and fault-tolerant request handling.
 
       - component: experience_card
         clickable: false
@@ -66,12 +66,19 @@ sections:
     columns: 2
     items:
       - component: project_card
-        clickable: false
+        clickable: true
         interaction: modal
         name: GoPush
         tagline: Interactive Command-line Git Manager built to simplify complex branching strategies.
         icon: Terminal
         summary: Interactive Command-line Git Manager built to simplify complex branching strategies.
+        details:
+          - "Interactive TUI for staging, committing, and pushing without memorizing git flags"
+          - "Branch strategy visualizer with tree-based diff display"
+          - "Built with Bubble Tea and Lip Gloss for rich terminal rendering"
+        links:
+          - type: github
+            url: https://github.com/seriouspoop/gopush
         tech: [Go, CLI, Git Internals]
 
       - component: project_card

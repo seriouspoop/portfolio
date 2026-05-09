@@ -1,0 +1,761 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Portfolio Configuration",
+    "description": "Configuration schema for portfolio.yaml - defines structure, types, and valid values",
+    "type": "object",
+    "required": [
+        "meta",
+        "profile",
+        "sections"
+    ],
+    "properties": {
+        "meta": {
+            "type": "object",
+            "description": "Portfolio metadata and configuration",
+            "required": [
+                "name",
+                "description",
+                "theme"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Portfolio site name",
+                    "examples": [
+                        "Harshit Singh Portfolio"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Portfolio meta description for SEO",
+                    "examples": [
+                        "Backend & Systems Engineer using Qwik and Three.js"
+                    ]
+                },
+                "theme": {
+                    "type": "string",
+                    "description": "Color theme preference",
+                    "enum": [
+                        "light",
+                        "dark",
+                        "auto"
+                    ],
+                    "default": "dark"
+                },
+                "accent_color": {
+                    "type": "string",
+                    "description": "Optional custom accent color (hex code)",
+                    "pattern": "^#[0-9A-Fa-f]{6}$",
+                    "examples": [
+                        "#10b981"
+                    ]
+                }
+            }
+        },
+        "profile": {
+            "type": "object",
+            "description": "Hero section - your main profile information",
+            "required": [
+                "component",
+                "name",
+                "role",
+                "tagline",
+                "links"
+            ],
+            "properties": {
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'hero' for profile",
+                    "const": "hero"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Your full name",
+                    "examples": [
+                        "Harshit Singh"
+                    ]
+                },
+                "role": {
+                    "type": "string",
+                    "description": "Your job title or role",
+                    "examples": [
+                        "Backend & Systems Engineer",
+                        "Full-Stack Developer"
+                    ]
+                },
+                "tagline": {
+                    "type": "string",
+                    "description": "Brief description or mission statement (1-2 sentences)",
+                    "examples": [
+                        "Architecting scalable distributed systems and optimizing high-throughput infrastructure."
+                    ]
+                },
+                "avatar": {
+                    "type": "string",
+                    "description": "Optional path to profile image",
+                    "examples": [
+                        "/images/profile.jpg"
+                    ]
+                },
+                "links": {
+                    "type": "array",
+                    "description": "Social and contact links",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                }
+            }
+        },
+        "sections": {
+            "type": "array",
+            "description": "Portfolio content sections (experience, projects, skills)",
+            "minItems": 1,
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/TimelineSection"
+                    },
+                    {
+                        "$ref": "#/definitions/GridSection"
+                    },
+                    {
+                        "$ref": "#/definitions/SkillGridSection"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Link": {
+            "type": "object",
+            "description": "External link (social, project, documentation)",
+            "required": [
+                "type",
+                "url"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Link type - determines icon and styling",
+                    "enum": [
+                        "github",
+                        "linkedin",
+                        "email",
+                        "demo",
+                        "docs",
+                        "live",
+                        "external"
+                    ]
+                },
+                "url": {
+                    "type": "string",
+                    "description": "Full URL (must include https:// or mailto:)",
+                    "pattern": "^(https?://|mailto:)",
+                    "examples": [
+                        "https://github.com/username",
+                        "mailto:email@example.com"
+                    ]
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Optional custom label text",
+                    "examples": [
+                        "View Code",
+                        "Live Demo"
+                    ]
+                }
+            }
+        },
+        "Metric": {
+            "type": "object",
+            "description": "Impact metric (performance improvement, cost reduction, etc.)",
+            "required": [
+                "label",
+                "value"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "Metric name or description",
+                    "examples": [
+                        "Performance Gain",
+                        "Cost Reduction",
+                        "Users Impacted"
+                    ]
+                },
+                "value": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ],
+                    "description": "Metric value (can include units)",
+                    "examples": [
+                        "50%",
+                        "10K",
+                        "$25K",
+                        115
+                    ]
+                }
+            }
+        },
+        "Stat": {
+            "type": "object",
+            "description": "Project statistic (stars, downloads, users, etc.)",
+            "required": [
+                "label",
+                "value"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "Stat name",
+                    "examples": [
+                        "GitHub Stars",
+                        "Downloads",
+                        "Active Users"
+                    ]
+                },
+                "value": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ],
+                    "description": "Stat value",
+                    "examples": [
+                        "2.5K",
+                        "100K+",
+                        5000
+                    ]
+                }
+            }
+        },
+        "BaseComponent": {
+            "type": "object",
+            "properties": {
+                "clickable": {
+                    "type": "boolean",
+                    "description": "Enable click interactions (expand/modal/drawer)",
+                    "default": false
+                },
+                "interaction": {
+                    "type": "string",
+                    "description": "Interaction type when clicked",
+                    "enum": [
+                        "expand",
+                        "modal",
+                        "drawer",
+                        "link",
+                        "none"
+                    ],
+                    "default": "none"
+                }
+            }
+        },
+        "TimelineSection": {
+            "type": "object",
+            "description": "Timeline section (typically for work experience)",
+            "required": [
+                "id",
+                "title",
+                "component",
+                "layout",
+                "items"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique section identifier",
+                    "enum": [
+                        "experience"
+                    ],
+                    "examples": [
+                        "experience"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Section heading displayed on page",
+                    "examples": [
+                        "Experience",
+                        "Work History"
+                    ]
+                },
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'timeline'",
+                    "const": "timeline"
+                },
+                "layout": {
+                    "type": "string",
+                    "description": "Timeline orientation",
+                    "enum": [
+                        "vertical",
+                        "horizontal"
+                    ],
+                    "default": "vertical"
+                },
+                "items": {
+                    "type": "array",
+                    "description": "Experience entries",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/ExperienceCard"
+                    }
+                }
+            }
+        },
+        "ExperienceCard": {
+            "type": "object",
+            "description": "Single work experience entry",
+            "required": [
+                "component",
+                "company",
+                "role",
+                "period",
+                "summary",
+                "tech"
+            ],
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseComponent"
+                }
+            ],
+            "properties": {
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'experience_card'",
+                    "const": "experience_card"
+                },
+                "company": {
+                    "type": "string",
+                    "description": "Company or organization name",
+                    "examples": [
+                        "Piovation GmbH",
+                        "Google",
+                        "Startup Inc"
+                    ]
+                },
+                "company_url": {
+                    "type": "string",
+                    "description": "Optional company website URL",
+                    "pattern": "^https?://",
+                    "examples": [
+                        "https://www.company.com"
+                    ]
+                },
+                "role": {
+                    "type": "string",
+                    "description": "Your job title",
+                    "examples": [
+                        "Software Engineer",
+                        "Senior Backend Developer"
+                    ]
+                },
+                "period": {
+                    "type": "string",
+                    "description": "Employment period (any format)",
+                    "examples": [
+                        "Dec 2024 - Present",
+                        "Jan 2023 - Aug 2024",
+                        "2022 - 2023"
+                    ]
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Optional work location",
+                    "examples": [
+                        "Remote",
+                        "San Francisco, CA",
+                        "Bengaluru, India"
+                    ]
+                },
+                "logo": {
+                    "type": "string",
+                    "description": "Optional path to company logo",
+                    "examples": [
+                        "/images/logos/company.svg",
+                        "/images/logos/company.png"
+                    ]
+                },
+                "summary": {
+                    "type": "string",
+                    "description": "Brief role description (2-4 sentences)",
+                    "examples": [
+                        "Architected real-time SSH connection pooling achieving 115% performance boost."
+                    ]
+                },
+                "details": {
+                    "type": "array",
+                    "description": "Optional detailed achievements (shown when card is clicked)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "Built high-performance SSH pooler",
+                            "Reduced infrastructure costs by 40%"
+                        ]
+                    ]
+                },
+                "tech": {
+                    "type": "array",
+                    "description": "Technologies used in this role",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "Go",
+                            "gRPC",
+                            "OpenTelemetry"
+                        ],
+                        [
+                            "Python",
+                            "Django",
+                            "PostgreSQL"
+                        ]
+                    ]
+                },
+                "metrics": {
+                    "type": "array",
+                    "description": "Optional impact metrics",
+                    "items": {
+                        "$ref": "#/definitions/Metric"
+                    }
+                }
+            }
+        },
+        "GridSection": {
+            "type": "object",
+            "description": "Grid section (typically for projects)",
+            "required": [
+                "id",
+                "title",
+                "component",
+                "layout",
+                "items"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique section identifier",
+                    "enum": [
+                        "projects"
+                    ],
+                    "examples": [
+                        "projects"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Section heading displayed on page",
+                    "examples": [
+                        "Engineering",
+                        "Projects",
+                        "Portfolio"
+                    ]
+                },
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'grid'",
+                    "const": "grid"
+                },
+                "layout": {
+                    "type": "string",
+                    "description": "Grid layout style",
+                    "enum": [
+                        "grid",
+                        "masonry",
+                        "carousel"
+                    ],
+                    "default": "grid"
+                },
+                "columns": {
+                    "type": "integer",
+                    "description": "Number of columns (for grid layout)",
+                    "minimum": 1,
+                    "maximum": 4,
+                    "default": 2
+                },
+                "items": {
+                    "type": "array",
+                    "description": "Project entries",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/ProjectCard"
+                    }
+                }
+            }
+        },
+        "ProjectCard": {
+            "type": "object",
+            "description": "Single project entry",
+            "required": [
+                "component",
+                "name",
+                "tagline",
+                "icon",
+                "summary",
+                "tech"
+            ],
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BaseComponent"
+                }
+            ],
+            "properties": {
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'project_card'",
+                    "const": "project_card"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Project name",
+                    "examples": [
+                        "GoPush",
+                        "TaskFlow",
+                        "API Gateway"
+                    ]
+                },
+                "tagline": {
+                    "type": "string",
+                    "description": "Short one-line description",
+                    "examples": [
+                        "Interactive Command-line Git Manager"
+                    ]
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "Icon name from available set",
+                    "enum": [
+                        "Terminal",
+                        "Server",
+                        "Cpu",
+                        "Activity",
+                        "Code",
+                        "Container",
+                        "Network",
+                        "Database"
+                    ],
+                    "examples": [
+                        "Terminal"
+                    ]
+                },
+                "thumbnail": {
+                    "type": "string",
+                    "description": "Optional path to project screenshot",
+                    "examples": [
+                        "/images/projects/project-name.png"
+                    ]
+                },
+                "summary": {
+                    "type": "string",
+                    "description": "Detailed project description (2-4 sentences)",
+                    "examples": [
+                        "High-performance benchmarking tool for analyzing algorithm efficiency."
+                    ]
+                },
+                "details": {
+                    "type": "array",
+                    "description": "Optional detailed features (shown when card is clicked)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "Built with modern React stack",
+                            "Real-time collaboration via WebSockets"
+                        ]
+                    ]
+                },
+                "tech": {
+                    "type": "array",
+                    "description": "Technologies used in project",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        [
+                            "Go",
+                            "CLI",
+                            "Git Internals"
+                        ],
+                        [
+                            "React",
+                            "Node.js",
+                            "PostgreSQL"
+                        ]
+                    ]
+                },
+                "links": {
+                    "type": "array",
+                    "description": "Optional project links (GitHub, demo, docs, live site)",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                },
+                "stats": {
+                    "type": "array",
+                    "description": "Optional project statistics",
+                    "items": {
+                        "$ref": "#/definitions/Stat"
+                    }
+                }
+            }
+        },
+        "SkillGridSection": {
+            "type": "object",
+            "description": "Skill grid section (categorized skills with proficiency levels)",
+            "required": [
+                "id",
+                "title",
+                "component",
+                "layout",
+                "items"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique section identifier",
+                    "enum": [
+                        "skills"
+                    ],
+                    "examples": [
+                        "skills"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Section heading displayed on page",
+                    "examples": [
+                        "Stack",
+                        "Skills",
+                        "Technologies"
+                    ]
+                },
+                "component": {
+                    "type": "string",
+                    "description": "Component type - must be 'skill_grid'",
+                    "const": "skill_grid"
+                },
+                "layout": {
+                    "type": "string",
+                    "description": "Skill display layout",
+                    "enum": [
+                        "categorized",
+                        "tags",
+                        "cloud"
+                    ],
+                    "default": "categorized"
+                },
+                "items": {
+                    "type": "array",
+                    "description": "Skill categories",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/SkillCategory"
+                    }
+                }
+            }
+        },
+        "SkillCategory": {
+            "type": "object",
+            "description": "Group of related skills",
+            "required": [
+                "category",
+                "icon",
+                "items"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "description": "Category name",
+                    "examples": [
+                        "Languages",
+                        "Frameworks",
+                        "Databases",
+                        "Tools"
+                    ]
+                },
+                "icon": {
+                    "type": "string",
+                    "description": "Icon name for category",
+                    "enum": [
+                        "Code",
+                        "Container",
+                        "Network",
+                        "Database",
+                        "Server",
+                        "Terminal",
+                        "Cpu",
+                        "Activity"
+                    ],
+                    "examples": [
+                        "Code"
+                    ]
+                },
+                "items": {
+                    "type": "array",
+                    "description": "Skills in this category",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/SkillItem"
+                    }
+                }
+            }
+        },
+        "SkillItem": {
+            "type": "object",
+            "description": "Individual skill with proficiency level",
+            "required": [
+                "name",
+                "level"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Skill or technology name",
+                    "examples": [
+                        "Go",
+                        "Kubernetes",
+                        "PostgreSQL"
+                    ]
+                },
+                "level": {
+                    "type": "string",
+                    "description": "Proficiency level",
+                    "enum": [
+                        "expert",
+                        "advanced",
+                        "intermediate",
+                        "beginner"
+                    ],
+                    "examples": [
+                        "expert"
+                    ]
+                },
+                "years": {
+                    "type": "integer",
+                    "description": "Optional years of experience",
+                    "minimum": 0,
+                    "examples": [
+                        5,
+                        10
+                    ]
+                }
+            }
+        }
+    }
+}
