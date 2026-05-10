@@ -141,9 +141,35 @@ export const ThreeBackground = component$(() => {
         data.velocity.y += (data.originalVelocity.y - data.velocity.y) * 0.02;
 
         // 4. Boundary Bounce
-        if (x < -9 || x > 9) data.velocity.x = -data.velocity.x;
-        if (y < -9 || y > 9) data.velocity.y = -data.velocity.y;
-        if (z < -9 || z > 9) data.velocity.z = -data.velocity.z;
+        const bounds = 9;
+        const nudge = 0.1; // Small push away from boundary
+
+        // X boundary
+        if (x < -bounds) {
+          x = -bounds + nudge;
+          data.velocity.x = Math.abs(data.velocity.x);
+        } else if (x > bounds) {
+          x = bounds - nudge;
+          data.velocity.x = -Math.abs(data.velocity.x);
+        }
+
+        // Y boundary
+        if (y < -bounds) {
+          y = -bounds + nudge;
+          data.velocity.y = Math.abs(data.velocity.y);
+        } else if (y > bounds) {
+          y = bounds - nudge;
+          data.velocity.y = -Math.abs(data.velocity.y);
+        }
+
+        // Z boundary
+        if (z < -bounds) {
+          z = -bounds + nudge;
+          data.velocity.z = Math.abs(data.velocity.z);
+        } else if (z > bounds) {
+          z = bounds - nudge;
+          data.velocity.z = -Math.abs(data.velocity.z);
+        }
 
         positions[vertexIndex] = x;
         positions[vertexIndex + 1] = y;

@@ -8,6 +8,7 @@ import { isTimelineSection, isGridSection, isSkillGridSection } from '../types/c
 import { ExperienceCardComponent } from '../components/experience-card';
 import { ProjectCardComponent } from '../components/project-card';
 import { PortfolioIcon } from '../components/portfolio-icon';
+import { ArrowUpRightIcon } from 'lucide-qwik';
 
 export default component$(() => {
   const loaded = useSignal(false);
@@ -20,7 +21,7 @@ export default component$(() => {
     <div class="relative min-h-screen bg-[#050505] text-zinc-300 selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden font-sans">
       <ThreeBackground />
 
-      <main class="relative z-10 max-w-5xl mx-auto px-6 py-20 lg:py-32 flex flex-col gap-32">
+      <main class="relative z-10 max-w-5xl mx-auto px-6 py-20 lg:py-32 flex flex-col gap-28">
 
         {/* HERO */}
         <section class={`flex flex-col items-start gap-6 transition-all duration-1000 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
@@ -48,6 +49,17 @@ export default component$(() => {
                 icon={link.type === 'github' ? 'Github' : link.type === 'linkedin' ? 'Linkedin' : 'Mail'}
               />
             ))}
+            <a
+              href="/resume"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex items-center gap-2 px-4 py-2 text-emerald-500 font-mono text-lg"
+            >
+              <span>Resume</span>
+              <span class="inline-flex text-emerald-500/70 group-hover:text-emerald-500/80 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <ArrowUpRightIcon size={18} strokeWidth={3} />
+              </span>
+            </a>
           </div>
         </section>
 

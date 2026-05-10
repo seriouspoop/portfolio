@@ -31,9 +31,9 @@ const iconMap: Record<string, any> = {
 };
 
 export const PortfolioIcon = component$(
-  ({ name, size = 18 }: { name: string; size?: number }) => {
+  ({ name, size = 18, strokeWidth = 2.5 }: { name: string; size?: number; strokeWidth?: number }) => {
     const Icon = iconMap[name];
     if (!Icon) return <></>;
-    return <Icon size={size} />;
+    return <Icon size={size} strokeWidth={strokeWidth} />;
   }
 );

@@ -23,6 +23,7 @@ sections:
     layout: vertical
     items:
       - component: experience_card
+        include_in_resume: true
         clickable: true
         interaction: modal
         company: Aurva
@@ -31,6 +32,10 @@ sections:
         period: Dec 2025 - Present
         location: Bengaluru
         summary: Built production-grade multi-cloud deployment infrastructure reducing customer onboarding time by 96% across AWS, GCP, and air-gapped environments. Delivered 8 components spanning Helm chart libraries, Terraform modules, and hardened Bash automation.
+        resume_highlights:
+          - Built multi-cloud deployment infrastructure reducing customer onboarding time by 96%.
+          - Designed centralized Helm chart library orchestrating 15+ microservices across AWS and GCP.
+          - Wrote hardened Bash installers cutting standalone server onboarding from 8 hours to 10 mins.
         tech: [Terraform, Helm, Kubernetes, AWS, GCP, Bash, eBPF]
         details:
           - Designed aurva-helm-commons, a centralized Helm chart library orchestrating 15+ microservices across any Kubernetes cluster with IRSA/Workload Identity federation and AWS Secrets Manager CSI integration — reducing new environment deployment from requiring a Helm expert to editing a single values file.
@@ -40,14 +45,19 @@ sections:
           - Wrote hardened Bash installers (eBPF collector, DBProxy, PostgreSQL 18) for standalone Linux servers with preflight validation, retry logic with exponential backoff, rollback, and dual CDN/air-gapped download paths — cutting standalone server onboarding from 4-8 hours to under 10 minutes.
 
       - component: experience_card
+        include_in_resume: true
         clickable: true
         interaction: modal
         company: Piovation GmbH
         company_url: https://www.piovation.com/
         role: Software Engineer
         period: Dec 2024 - Aug 2025
-        location: Remote
+        location: Germany
         summary: Architected real-time SSH connection pooling achieving 115% performance boost (8K to 17K req/s). Built gRPC gateway layer for hardware communication and led full-stack OpenTelemetry instrumentation cutting debugging time by 40%.
+        resume_highlights:
+          - Architected SSH connection pooling achieving 115% performance boost (8K to 17K req/s).
+          - Built high-throughput gateway layer with gRPC streams for hardware communication.
+          - Led full-stack OpenTelemetry instrumentation cutting system debugging time by 40%.
         tech: [Go, gRPC, OpenTelemetry, Protobuf]
         details:
           - Architected and implemented real-time SSH connection pooling system for remote Linux servers, achieving 115% performance improvement (8K to 17K requests/sec) and reducing resource overhead.
@@ -57,14 +67,19 @@ sections:
           - Optimized critical system architecture for high-availability deployment scenarios, ensuring consistent 99.9% uptime across production environments and handling peak traffic loads.
 
       - component: experience_card
+        include_in_resume: true
         clickable: true
         interaction: modal
-        company: RabbitLoader
-        company_url: https://rabbitloader.com/
+        company: Dofollo AI
+        company_url: https://dofollo.ai
         role: Backend Developer Intern
         period: May 2024 - Oct 2024
         location: Remote
         summary: Engineered Redis-based distributed caching cutting database load by 40%. Designed RabbitMQ event-driven architecture improving reliability by 30% and built Docker Swarm orchestration reducing service downtime by 50%.
+        resume_highlights:
+          - Engineered Redis-based distributed caching system reducing database load by 40%.
+          - Designed RabbitMQ event-driven architecture improving system reliability by 30%.
+          - Orchestrated Docker Swarm deployment achieving 50% reduction in service downtime.
         tech: [Go, Redis, RabbitMQ, Docker, gRPC]
         details:
           - Engineered comprehensive Redis-based distributed caching system with intelligent cache invalidation strategies, reducing database load by 40% and significantly improving application response times.
@@ -80,6 +95,8 @@ sections:
     columns: 2
     items:
       - component: project_card
+        include_in_resume: true
+        resume_priority: 1
         clickable: true
         interaction: modal
         name: GoPush
@@ -96,6 +113,8 @@ sections:
         tech: [Go, CLI, Git Internals]
 
       - component: project_card
+        include_in_resume: true
+        resume_priority: 3
         clickable: true
         interaction: modal
         name: SysArch Ops
@@ -110,6 +129,7 @@ sections:
         tech: [Bash, Linux, CI/CD]
 
       - component: project_card
+        include_in_resume: false
         clickable: true
         interaction: modal
         name: AlgoBench
@@ -126,6 +146,8 @@ sections:
         tech: [Go, Performance, Data Structures]
 
       - component: project_card
+        include_in_resume: true
+        resume_priority: 2
         clickable: true
         interaction: modal
         name: Observer
@@ -156,6 +178,12 @@ sections:
           - name: C
             level: intermediate
           - name: Bash
+            level: advanced
+          - name: Kotlin
+            level: beginner
+          - name: Python
+            level: intermediate
+          - name: TypeScript
             level: advanced
 
       - category: Orchestration & Ops

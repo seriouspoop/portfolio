@@ -432,6 +432,23 @@
                     "items": {
                         "$ref": "#/definitions/Metric"
                     }
+                },
+                "include_in_resume": {
+                    "type": "boolean",
+                    "description": "Include this experience in PDF resume (default: true)",
+                    "default": true
+                },
+                "resume_summary": {
+                    "type": "string",
+                    "description": "Optional shorter summary for resume (uses 'summary' if not provided)"
+                },
+                "resume_highlights": {
+                    "type": "array",
+                    "description": "Key highlights for resume (max 2-3 bullet points)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "maxItems": 3
                 }
             }
         },
@@ -614,6 +631,16 @@
                     "items": {
                         "$ref": "#/definitions/Stat"
                     }
+                },
+                "include_in_resume": {
+                    "type": "boolean",
+                    "description": "Include this project in PDF resume (default: false for projects)",
+                    "default": false
+                },
+                "resume_priority": {
+                    "type": "integer",
+                    "description": "Priority order in resume (1=highest, shows first)",
+                    "minimum": 1
                 }
             }
         },

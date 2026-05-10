@@ -29,7 +29,7 @@ const CardBody = component$(({
       <h3 class="text-xl font-bold text-white flex items-center gap-2">
         {job.role}
         <span class="inline-flex text-emerald-500/70 group-hover:text-emerald-500/80 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-          <ArrowUpRightIcon size={16} />
+          <ArrowUpRightIcon size={18} strokeWidth={3} />
         </span>
       </h3>
       <div class="flex items-center gap-2">

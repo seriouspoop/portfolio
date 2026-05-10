@@ -65,6 +65,9 @@ export interface ExperienceCard extends BaseComponent {
   details?: string[];
   tech: string[];
   metrics?: Metric[];
+  include_in_resume?: boolean;
+  resume_summary?: string;
+  resume_highlights?: string[];
 }
 
 export interface ProjectCard extends BaseComponent {
@@ -78,6 +81,8 @@ export interface ProjectCard extends BaseComponent {
   tech: string[];
   links?: Link[];
   stats?: Stat[];
+  include_in_resume?: boolean;
+  resume_priority?: number;
 }
 
 export interface SkillItem {
