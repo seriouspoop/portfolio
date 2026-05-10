@@ -41,7 +41,7 @@ export default component$(() => {
         /* Typography fallbacks or very specific units if needed */
       `} />
 
-      <div class="max-w-[8.5in] mx-auto py-6 px-8 bg-white text-[10pt] leading-[1.3] print:text-[9pt] print:leading-[1.25] print:max-w-full print:py-0 print:px-[0.6in] print:m-0">
+      <div class="max-w-[8.5in] mx-auto py-6 px-8 bg-white text-[10pt] leading-[1.3] print:text-[9.5pt] print:leading-[1.25] print:max-w-full print:py-0 print:px-[0.6in] print:m-0">
         
         {/* Print Instructions Banner (hidden when printing) */}
         <div class="print:hidden bg-emerald-50 border border-emerald-100 p-4 sm:py-2.5 sm:px-4 mb-8 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -97,7 +97,7 @@ export default component$(() => {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="text-[0.7rem] text-emerald-500 no-underline leading-[1.3] hover:underline print:text-[0.65rem] print:text-emerald-600"
+                            class="text-[0.7rem] text-emerald-500 no-underline leading-[1.3] hover:underline print:text-[0.75rem] print:text-emerald-600"
                           >
                             {link.type === 'email' 
                               ? link.url.replace('mailto:', '')
@@ -106,7 +106,7 @@ export default component$(() => {
                         ))}
                       </div>
                     </div>
-                    <div class="col-span-2 text-ms text-gray-500 leading-[1.3] mt-1 print:text-[0.65rem]">
+                    <div class="col-span-2 text-ms text-gray-500 leading-[1.3] mt-1 print:text-[0.75rem]">
                         {portfolioData.profile.tagline}
                     </div>
                   </div>
@@ -114,25 +114,25 @@ export default component$(() => {
 
                 {/* Experience Section */}
                 {resumeExperience.length > 0 && (
-                  <section class="mb-8">
-                    <h2 class="text-[0.9rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-2 print:mb-1 break-after-avoid">
+                  <section class="mb-8 print:mb-4">
+                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Professional Experience
                     </h2>
-                    <div class="space-y-6">
+                    <div class="space-y-6 print:space-y-3">
                       {resumeExperience.map((job, idx) => (
-                        <div key={idx} class="mb-4 print:mb-2 break-inside-avoid">
+                        <div key={idx} class="mb-4 print:mb-1.5 break-inside-avoid">
                           {/* Job Title and Period */}
                           <div class="flex justify-between items-baseline mb-0.5 gap-4">
-                            <h3 class="text-[1.05rem] font-bold text-gray-900 leading-tight">
+                            <h3 class="text-[1.05rem] print:text-[0.9rem] font-bold text-gray-900 leading-tight">
                               {job.role}
                             </h3>
-                            <span class="text-sm text-gray-500 whitespace-nowrap font-bold">
+                            <span class="text-sm print:text-[0.75rem] text-gray-500 whitespace-nowrap font-bold">
                               {job.period}
                             </span>
                           </div>
                           
                           {/* Company */}
-                          <div class="flex items-center gap-2 mb-2 text-sm">
+                          <div class="flex items-center gap-2 mb-2 print:mb-1 text-sm print:text-[0.75rem]">
                             {job.company_url ? (
                               <a
                                 href={job.company_url}
@@ -156,26 +156,26 @@ export default component$(() => {
                           
                           {/* Summary/Highlights */}
                           {job.resume_highlights ? (
-                            <ul class="list-none space-y-1 mb-2 text-[0.875rem] text-gray-600">
+                            <ul class="list-none space-y-1 print:space-y-0.5 mb-2 print:mb-1.5 text-[0.875rem] print:text-[0.75rem] text-gray-600">
                               {job.resume_highlights.map((highlight, hIdx) => (
-                                <li key={hIdx} class="flex items-start gap-2.5">
-                                  <span class="text-emerald-500 font-black mt-1 text-[10px]">▶</span>
+                                <li key={hIdx} class="flex items-start gap-2.5 print:gap-1.5">
+                                  <span class="text-emerald-500 font-black mt-1 print:mt-0.5 text-[10px] print:text-[7px]">▶</span>
                                   <span class="leading-relaxed">{highlight}</span>
                                 </li>
                               ))}
                             </ul>
                           ) : (
-                            <p class="text-[0.925rem] text-gray-700 mb-2 leading-relaxed font-medium">
+                            <p class="text-[0.925rem] print:text-[0.75rem] text-gray-700 mb-2 print:mb-1.5 leading-relaxed font-medium">
                               {job.resume_summary || job.summary}
                             </p>
                           )}
                           
                           {/* Technologies */}
-                          <div class="flex flex-wrap gap-1.5">
+                          <div class="flex flex-wrap gap-1.5 print:gap-1">
                             {job.tech.slice(0, 6).map((tech, tIdx) => (
                               <span
                                 key={tIdx}
-                                class="px-2 py-0.5 bg-gray-50 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded border border-gray-100"
+                                class="px-2 py-0.5 print:px-1.5 print:py-[1px] bg-gray-50 text-gray-600 text-[10px] print:text-[7px] font-bold uppercase tracking-wider rounded border border-gray-100 print:border-gray-200"
                               >
                                 {tech}
                               </span>
@@ -189,18 +189,18 @@ export default component$(() => {
 
                 {/* Projects Section */}
                 {resumeProjects.length > 0 && (
-                  <section class="mb-8">
-                    <h2 class="text-[0.9rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-2 print:mb-1 break-after-avoid">
+                  <section class="mb-8 print:mb-4">
+                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Key Projects
                     </h2>
-                    <div class="grid grid-cols-1 gap-3">
+                    <div class="grid grid-cols-1 gap-3 print:gap-2">
                       {resumeProjects.map((project, idx) => (
                         <div key={idx} class="break-inside-avoid">
-                          <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-base font-bold text-gray-900">
+                          <div class="flex justify-between items-baseline mb-1 print:mb-0.5">
+                            <h3 class="text-base print:text-[0.9rem] font-bold text-gray-900">
                               {project.name}
                             </h3>
-                            <div class="flex gap-3 text-[10px] font-bold uppercase tracking-tighter">
+                            <div class="flex gap-3 print:gap-1.5 text-[10px] print:text-[7px] font-bold uppercase tracking-tighter">
                               {project.links?.map((link, lIdx) => (
                                 <a
                                   key={lIdx}
@@ -215,16 +215,16 @@ export default component$(() => {
                             </div>
                           </div>
                           
-                          <p class="text-sm text-gray-700 mb-2 leading-relaxed">
+                          <p class="text-sm print:text-[0.75rem] text-gray-700 mb-2 print:mb-1 leading-relaxed">
                             <span class="font-bold text-gray-900 mr-1">{project.tagline}:</span>
                             {project.summary}
                           </p>
                           
-                          <div class="flex flex-wrap gap-1.5">
+                          <div class="flex flex-wrap gap-1.5 print:gap-1">
                             {project.tech.slice(0, 6).map((tech, tIdx) => (
                               <span
                                 key={tIdx}
-                                class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-wider rounded border border-emerald-100"
+                                class="px-2 py-0.5 print:px-1.5 print:py-[1px] bg-emerald-50 text-emerald-700 text-[10px] print:text-[7px] font-bold uppercase tracking-wider rounded border border-emerald-100 print:border-emerald-200"
                               >
                                 {tech}
                               </span>
@@ -238,19 +238,19 @@ export default component$(() => {
 
                 {/* Skills Section */}
                 {skillsSection && isSkillGridSection(skillsSection) && (
-                  <section class="mb-8">
-                    <h2 class="text-[0.9rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-2 print:mb-1 break-after-avoid">
+                  <section class="mb-8 print:mb-4">
+                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Technical Skills
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-12 gap-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-12 print:gap-x-8 gap-y-3 print:gap-y-1.5">
                       {skillsSection.items.map((category, idx) => (
-                        <div key={idx} class="flex flex-col gap-1 break-inside-avoid">
-                          <span class="text-xs font-black text-emerald-600 uppercase tracking-widest">
+                        <div key={idx} class="flex flex-col gap-1 print:gap-0 break-inside-avoid">
+                          <span class="text-xs print:text-[0.65rem] font-black text-emerald-600 uppercase tracking-widest">
                             {category.category}
                           </span>
-                          <span class="text-sm text-gray-700 leading-relaxed font-medium">
+                          <span class="text-sm print:text-[0.75rem] text-gray-700 leading-relaxed font-medium">
                             {category.items
-                              .filter(s => s.level === 'expert' || s.level === 'advanced' || s.level === 'intermediate')
+                              .filter(s => s.level === 'expert' || s.level === 'advanced' || s.level === 'adept' )
                               .map(s => s.name)
                               .join(' • ')}
                           </span>

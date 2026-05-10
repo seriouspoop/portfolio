@@ -11,7 +11,7 @@ export type InteractionType = "expand" | "modal" | "drawer" | "link" | "none";
 
 export type LayoutType = "vertical" | "horizontal" | "grid" | "masonry" | "carousel" | "categorized" | "tags" | "cloud";
 
-export type SkillLevel = "expert" | "advanced" | "intermediate" | "beginner";
+export type SkillLevel = "expert" | "advanced" | "adept" | "beginner";
 
 export type LinkType = "github" | "linkedin" | "email" | "demo" | "docs" | "live" | "external";
 
