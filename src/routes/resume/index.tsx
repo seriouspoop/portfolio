@@ -101,7 +101,7 @@ export default component$(() => {
                           >
                             {link.type === 'email' 
                               ? link.url.replace('mailto:', '')
-                              : link.url.replace('https://', '').replace('www.', '').split('/')[0]}
+                              : link.url.replace('https://', '').replace('www.', '')}
                           </a>
                         ))}
                       </div>
