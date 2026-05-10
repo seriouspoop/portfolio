@@ -177,6 +177,8 @@ sections:
             level: beginner
           - name: C
             level: intermediate
+          - name: Zig
+            level: beginner
           - name: Bash
             level: advanced
           - name: Kotlin
