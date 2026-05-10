@@ -97,7 +97,7 @@ export default component$(() => {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="text-[0.7rem] text-emerald-500 no-underline leading-[1.3] hover:underline print:text-[0.75rem] print:text-emerald-600"
+                            class="text-[0.8rem] text-emerald-500 no-underline leading-[1.3] hover:underline print:text-[0.75rem] print:text-emerald-600"
                           >
                             {link.type === 'email' 
                               ? link.url.replace('mailto:', '')
