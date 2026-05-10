@@ -26,7 +26,12 @@ const CardBody = component$(({
 }) => (
   <>
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-      <h3 class="text-xl font-bold text-white">{job.role}</h3>
+      <h3 class="text-xl font-bold text-white flex items-center gap-2">
+        {job.role}
+        <span class="inline-flex text-emerald-500/70 group-hover:text-emerald-500/80 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+          <ArrowUpRightIcon size={16} />
+        </span>
+      </h3>
       <div class="flex items-center gap-2">
         <span class="font-mono text-sm text-emerald-500/80">{job.period}</span>
         {showChevron && (
@@ -311,11 +316,13 @@ const ExperienceCardLink = component$(({ job }: { job: ExperienceCard }) => {
           class="absolute top-4 right-4 w-10 h-10 object-contain opacity-40 group-hover:opacity-70 transition-opacity z-10" />
       )}
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-        <h3 class="text-xl font-bold text-white">{job.role}</h3>
-        <div class="flex items-center gap-2">
-          <span class="font-mono text-sm text-emerald-500/80">{job.period}</span>
-          <ArrowUpRightIcon size={14} class="text-emerald-500/60" />
-        </div>
+        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+          {job.role}
+          <span class="inline-flex text-emerald-500/0 group-hover:text-emerald-500/80 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+            <ArrowUpRightIcon size={16} />
+          </span>
+        </h3>
+        <span class="font-mono text-sm text-emerald-500/80">{job.period}</span>
       </div>
 
       <div class="text-lg text-zinc-400 font-medium mb-4">
