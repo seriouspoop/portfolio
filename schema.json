@@ -770,7 +770,7 @@
                     "enum": [
                         "expert",
                         "advanced",
-                        "intermediate",
+                        "adept",
                         "beginner"
                     ],
                     "examples": [

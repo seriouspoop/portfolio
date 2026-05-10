@@ -12,7 +12,7 @@ export const SectionTitle = component$(() => (
 const levelColor: Record<string, string> = {
   expert:       'text-emerald-400',
   advanced:     'text-emerald-600',
-  intermediate: 'text-zinc-400',
+  adept: 'text-zinc-400',
   beginner:     'text-zinc-600',
 };
 

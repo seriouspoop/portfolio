@@ -116,11 +116,13 @@ export default component$(() => {
                         </span>
                         {grp.category}
                       </h3>
+                      
                       <div class="flex flex-wrap gap-2">
                         {grp.items.map((skill, sIdx) => (
                           <SkillTag key={sIdx} skill={skill.name} level={skill.level} />
                         ))}
                       </div>
+                      
                     </div>
                   ))}
                 </div>

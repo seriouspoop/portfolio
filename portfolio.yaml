@@ -176,15 +176,13 @@ sections:
           - name: Rust
             level: beginner
           - name: C
-            level: intermediate
+            level: adept
           - name: Zig
             level: beginner
-          - name: Bash
-            level: advanced
+          - name: Python
+            level: adept
           - name: Kotlin
             level: beginner
-          - name: Python
-            level: intermediate
           - name: TypeScript
             level: advanced
 
@@ -208,7 +206,7 @@ sections:
           - name: GitHub Actions
             level: advanced
           - name: Jenkins
-            level: intermediate
+            level: adept
 
       - category: Distributed Systems
         icon: Network
@@ -238,7 +236,7 @@ sections:
           - name: TimescaleDB
             level: advanced
           - name: MongoDB
-            level: intermediate
+            level: adept
           - name: PebbleDB
             level: beginner
 
@@ -248,7 +246,7 @@ sections:
           - name: AWS
             level: advanced
           - name: GCP
-            level: intermediate
+            level: adept
           - name: On-prem
             level: advanced
           
