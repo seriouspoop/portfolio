@@ -82,7 +82,7 @@ const ProjectCardModal = component$(({ project }: { project: ProjectCard }) => {
         <div class="p-8 max-h-[85vh] overflow-y-auto relative">
           <button
             onClick$={closeModal}
-            class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors p-1 rounded-md hover:bg-zinc-800"
+            class="absolute top-4 right-4 text-zinc-500 hover:text-white cursor-pointer transition-colors p-1 rounded-md hover:bg-zinc-800"
             aria-label="Close"
           >
             <XIcon size={18} />
@@ -202,7 +202,7 @@ const ProjectCardDrawer = component$(({ project }: { project: ProjectCard }) => 
           <div class="p-6">
             <button
               onClick$={close}
-              class="mb-6 text-zinc-500 hover:text-white transition-colors"
+              class="mb-6 text-zinc-500 hover:text-white cursor-pointer transition-colors"
               aria-label="Close"
             >
               <XIcon size={18} />
