@@ -200,7 +200,7 @@ export default component$(() => {
                             <h3 class="text-base print:text-[0.9rem] font-bold text-gray-900">
                               {project.name}
                             </h3>
-                            <div class="flex gap-3 print:gap-1.5 text-ms print:text-[0.8rem] font-bold uppercase tracking-tighter">
+                            <div class="flex gap-3 print:gap-1.5 text-ms print:text-[0.75rem] font-bold uppercase tracking-tighter">
                               {project.links?.map((link, lIdx) => (
                                 <a
                                   key={lIdx}
