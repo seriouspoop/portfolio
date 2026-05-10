@@ -41,25 +41,24 @@ export default component$(() => {
         /* Typography fallbacks or very specific units if needed */
       `} />
 
-      {/* Changed print:py-[0.4in] to print:py-0, keeping print:px-[0.6in] */}
       <div class="max-w-[8.5in] mx-auto py-6 px-8 bg-white text-[10pt] leading-[1.3] print:text-[9pt] print:leading-[1.25] print:max-w-full print:py-0 print:px-[0.6in] print:m-0">
         
         {/* Print Instructions Banner (hidden when printing) */}
-        <div class="print:hidden bg-emerald-50 border border-emerald-100 py-2.5 px-4 mb-8 rounded-xl shadow-sm flex items-center justify-between gap-4">
-          <div class="flex items-center gap-4">
-            <div class="w-13 h-13 bg-emerald-500 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-lg shadow-emerald-200">
-              <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="print:hidden bg-emerald-50 border border-emerald-100 p-4 sm:py-2.5 sm:px-4 mb-8 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 text-left">
+            <div class="w-12 h-12 sm:w-13 sm:h-13 bg-emerald-500 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-lg shadow-emerald-200">
+              <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
               </svg>
             </div>
-            <div class="flex flex-col gap-1">
-              <p class="font-bold text-gray-900 text-base">Print to PDF</p>
-              <p class="text-ms text-gray-600">
-                Press <kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.65rem] font-mono font-bold">Ctrl</kbd>+<kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.65rem] font-mono font-bold">P</kbd> or <kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.65rem] font-mono font-bold">⌘</kbd>+<kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.65rem] font-mono font-bold">P</kbd> and select <strong>"Save as PDF"</strong>.
+            <div class="flex flex-col gap-0.5 sm:gap-1">
+              <p class="font-bold text-gray-900 text-sm sm:text-base">Print to PDF</p>
+              <p class="text-xs sm:text-ms text-gray-600 leading-tight">
+                Press <kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.6rem] sm:text-[0.65rem] font-mono font-bold">Ctrl</kbd>+<kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.6rem] sm:text-[0.65rem] font-mono font-bold">P</kbd> or <kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.6rem] sm:text-[0.65rem] font-mono font-bold">⌘</kbd>+<kbd class="inline-block px-1.5 py-0.5 bg-white border border-gray-300 rounded text-[0.6rem] sm:text-[0.65rem] font-mono font-bold">P</kbd> and select <strong>"Save as PDF"</strong>.
               </p>
             </div>
           </div>
-          <a href="/" class="whitespace-nowrap text-ms font-bold text-emerald-600 hover:text-emerald-700 bg-white px-5 py-3 rounded-lg border border-emerald-100 shadow-sm transition-all hover:shadow-md">
+          <a href="/" class="whitespace-nowrap text-ms font-bold text-emerald-600 hover:text-emerald-700 bg-white px-5 py-3 rounded-lg border border-emerald-100 shadow-sm transition-all hover:shadow-md text-center">
             Back to Portfolio
           </a>
         </div>
