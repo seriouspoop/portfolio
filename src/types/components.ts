@@ -136,9 +136,15 @@ export interface ContactSection {
 
 export type Section = TimelineSection | GridSection | SkillGridSection | ContactSection;
 
+export interface GithubFeatureConfig {
+  enabled: boolean;
+  username?: string;
+}
+
 export interface PortfolioConfig {
   meta: Meta;
   profile: ProfileConfig;
+  github?: GithubFeatureConfig;
   sections: Section[];
 }
 
