@@ -8,237 +8,329 @@ export const ThreeBackground = component$(() => {
     if (!containerRef.value) return;
 
     // --- CONFIGURATION ---
-    const particleCount = 120;
-    const connectDistance = 2.5;
-    const moveSpeed = 0.008;
-    const mouseRepulsionRadius = 3.0; // Increased radius for softer falloff
-    const mouseRepulsionForce = 0.001; // significantly reduced force for gentle push
+    const particleCount = 60;
+    const gridSize = 0.8;
+    const cameraZ = 8;
+    const fov = 75;
+    const planeSize = 60;
+    const planeSegments = 160;
+    const baseGridOpacity = 0.3;
+    const glowRadius = 3.0;
+    const wellRadius = 2.0;
+    const wellDepth = 0.5;
+    const minSpeed = 0.008;
+    const maxSpeed = 0.025;
+    const particleOpacity = 0.8;
+    const trailOpacity = 0.7;
+    const trailSegments = 4;
 
-    // --- VARIABLES ---
-    let mouseX = 0;
-    let mouseY = 0;
-    // Normalized mouse coordinates for Raycaster (-1 to 1)
+    // --- STATE ---
     const mouseVector = new THREE.Vector2(-100, -100);
+    const mouseWorld = new THREE.Vector3(1000, 1000, 0);
+    const targetMouseWorld = new THREE.Vector3(1000, 1000, 0);
+    let mouseActive = false;
+    let activeFactor = 0;
 
-    // 1. Setup Scene
+    // 1. Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      fov,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     containerRef.value.appendChild(renderer.domElement);
+    camera.position.z = cameraZ;
 
-    // Helpers for interactions
+    const computeBounds = () => {
+      const halfHeight = cameraZ * Math.tan((fov * Math.PI) / 360);
+      const halfWidth = halfHeight * (window.innerWidth / window.innerHeight);
+      return Math.max(halfWidth, halfHeight) + 1;
+    };
+    let bounds = computeBounds();
+
     const raycaster = new THREE.Raycaster();
-    const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0); // Virtual plane at Z=0
-    const planeIntersectPoint = new THREE.Vector3();
+    const mathPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
-    // 2. Create Particles
-    const particlesData: { velocity: THREE.Vector3, originalVelocity: THREE.Vector3 }[] = [];
+    // 2. Warping grid plane — visible at base opacity, brightens near cursor
+    const gridGeometry = new THREE.PlaneGeometry(planeSize, planeSize, planeSegments, planeSegments);
+    const gridMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uMouse: { value: new THREE.Vector3(1000, 1000, 0) },
+        uMouseActive: { value: 0.0 },
+        uGlowRadius: { value: glowRadius },
+        uWellRadius: { value: wellRadius },
+        uWellDepth: { value: wellDepth },
+        uGridSize: { value: gridSize },
+        uBaseOpacity: { value: baseGridOpacity },
+        uColor: { value: new THREE.Color(0x4a8a7a) },
+        uGlowColor: { value: new THREE.Color(0x9af5e0) },
+      },
+      vertexShader: /* glsl */ `
+        uniform vec3 uMouse;
+        uniform float uWellRadius;
+        uniform float uWellDepth;
+        uniform float uMouseActive;
+        varying vec3 vWorldPos;
+
+        void main() {
+          vec3 pos = position;
+          vec2 toMouse = uMouse.xy - pos.xy;
+          float distSq = dot(toMouse, toMouse);
+          float r2 = uWellRadius * uWellRadius * 0.35;
+          float wellInfluence = exp(-distSq / r2) * uMouseActive;
+          pos.z -= wellInfluence * uWellDepth;
+          vWorldPos = pos;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        }
+      `,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uMouse;
+        uniform float uMouseActive;
+        uniform float uGlowRadius;
+        uniform float uGridSize;
+        uniform float uBaseOpacity;
+        uniform vec3 uColor;
+        uniform vec3 uGlowColor;
+        varying vec3 vWorldPos;
+
+        void main() {
+          vec2 coord = vWorldPos.xy / uGridSize;
+          vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);
+          float line = min(grid.x, grid.y);
+          float gridMask = 1.0 - min(line, 1.0);
+          if (gridMask < 0.01) discard;
+
+          float distToMouse = distance(vWorldPos.xy, uMouse.xy);
+          float glow = 1.0 - smoothstep(0.0, uGlowRadius, distToMouse);
+          glow = glow * glow * uMouseActive;
+
+          float intensity = gridMask * (uBaseOpacity + glow * 0.9);
+          vec3 color = mix(uColor, uGlowColor, glow);
+
+          gl_FragColor = vec4(color, intensity);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    });
+    const gridMesh = new THREE.Mesh(gridGeometry, gridMaterial);
+    scene.add(gridMesh);
+
+    // 3. Particles — strictly travel along one grid axis at constant velocity
+    type ParticleData = {
+      axis: 0 | 1; // 0 = X, 1 = Y
+      speed: number; // signed magnitude along the axis
+      trailLen: number;
+    };
+    const particlesData: ParticleData[] = [];
     const positions = new Float32Array(particleCount * 3);
     const geometry = new THREE.BufferGeometry();
 
     for (let i = 0; i < particleCount; i++) {
-      const x = (Math.random() - 0.5) * 18;
-      const y = (Math.random() - 0.5) * 18;
-      const z = (Math.random() - 0.5) * 10;
+      const axis: 0 | 1 = Math.random() > 0.5 ? 0 : 1;
+      const dir = Math.random() > 0.5 ? 1 : -1;
+      const speedMag = minSpeed + Math.random() * (maxSpeed - minSpeed);
+      const speed = speedMag * dir;
+      const trailLen = 0.5 + speedMag * 50;
 
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
-      positions[i * 3 + 2] = z;
+      const lane = Math.round(((Math.random() - 0.5) * bounds * 1.9) / gridSize) * gridSize;
+      const along = (Math.random() - 0.5) * bounds * 2;
 
-      const v = new THREE.Vector3(
-        -1 + Math.random() * 2,
-        -1 + Math.random() * 2,
-        -1 + Math.random() * 2
-      ).normalize().multiplyScalar(moveSpeed);
+      if (axis === 0) {
+        positions[i * 3] = along;
+        positions[i * 3 + 1] = lane;
+      } else {
+        positions[i * 3] = lane;
+        positions[i * 3 + 1] = along;
+      }
+      positions[i * 3 + 2] = 0.02;
 
-      particlesData.push({
-        velocity: v.clone(),
-        originalVelocity: v.clone() // Store original to revert after repulsion
-      });
+      particlesData.push({ axis, speed, trailLen });
     }
-
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-    // 3. Materials
     const pMaterial = new THREE.PointsMaterial({
-      color: 0x44aa88,
-      size: 0.08,
+      color: 0xbcffe8,
+      size: 0.085,
       transparent: true,
-      opacity: 0.8,
+      opacity: particleOpacity,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
     const particlesMesh = new THREE.Points(geometry, pMaterial);
     scene.add(particlesMesh);
 
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x44aa88,
+    // 4. Shooting-star trails — subdivided so they curve along the warped grid surface
+    const trailVerts = trailSegments * 2; // LineSegments: 2 verts per segment
+    const trailPositions = new Float32Array(particleCount * trailVerts * 3);
+    const trailAlphas = new Float32Array(particleCount * trailVerts);
+    for (let i = 0; i < particleCount; i++) {
+      for (let s = 0; s < trailSegments; s++) {
+        const a0 = 1 - s / trailSegments;
+        const a1 = 1 - (s + 1) / trailSegments;
+        trailAlphas[i * trailVerts + s * 2] = a0;
+        trailAlphas[i * trailVerts + s * 2 + 1] = a1;
+      }
+    }
+    const trailGeometry = new THREE.BufferGeometry();
+    trailGeometry.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+    trailGeometry.setAttribute('aAlpha', new THREE.BufferAttribute(trailAlphas, 1));
+
+    const trailMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(0x9af5e0) },
+        uIntensity: { value: trailOpacity },
+      },
+      vertexShader: /* glsl */ `
+        attribute float aAlpha;
+        varying float vAlpha;
+        void main() {
+          vAlpha = aAlpha;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uColor;
+        uniform float uIntensity;
+        varying float vAlpha;
+        void main() {
+          float a = pow(vAlpha, 2.0) * uIntensity;
+          gl_FragColor = vec4(uColor, a);
+        }
+      `,
       transparent: true,
-      opacity: 0.12,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
-    const lineGeometry = new THREE.BufferGeometry();
-    const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(linesMesh);
+    const trailMesh = new THREE.LineSegments(trailGeometry, trailMaterial);
+    scene.add(trailMesh);
 
-    camera.position.z = 5;
-
-    // 4. Mouse Listeners
+    // 5. Mouse
     const onMouseMove = (event: MouseEvent) => {
-      // For Parallax (Screen center is 0,0)
-      // Reduced sensitivity from 0.001 to 0.0002 for very subtle movement
-      mouseX = (event.clientX - window.innerWidth / 2) * 0.0002;
-      mouseY = (event.clientY - window.innerHeight / 2) * 0.0002;
-
-      // For Raycasting (Normalized 0 to 1)
       mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      mouseActive = true;
+    };
+    const onMouseLeave = () => {
+      mouseActive = false;
     };
     document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseleave', onMouseLeave);
 
-    // 5. Animation Loop
+    // 6. Animation loop
     let animationId: number;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
 
-      // --- A. Mouse Interaction (Raycasting) ---
       raycaster.setFromCamera(mouseVector, camera);
-      raycaster.ray.intersectPlane(plane, planeIntersectPoint);
+      const hit = raycaster.ray.intersectPlane(mathPlane, targetMouseWorld);
+      if (!hit) targetMouseWorld.set(1000, 1000, 0);
+      mouseWorld.lerp(targetMouseWorld, 0.18);
 
-      // --- B. Update Particles ---
-      let vertexIndex = 0;
+      const target = mouseActive ? 1 : 0;
+      activeFactor += (target - activeFactor) * 0.06;
+      if (activeFactor < 0.001) activeFactor = 0;
+
+      gridMaterial.uniforms.uMouse.value.copy(mouseWorld);
+      gridMaterial.uniforms.uMouseActive.value = activeFactor;
+
+      const wellR2 = wellRadius * wellRadius;
+      const wellR2x035 = wellR2 * 0.35;
+
+      // Sample the warped grid surface at any (x,y) — matches the grid vertex shader exactly
+      const gridZAt = (px: number, py: number): number => {
+        if (activeFactor < 0.005) return 0.02;
+        const dx = mouseWorld.x - px;
+        const dy = mouseWorld.y - py;
+        const dSq = dx * dx + dy * dy;
+        return -Math.exp(-dSq / wellR2x035) * wellDepth * activeFactor + 0.02;
+      };
+
       for (let i = 0; i < particleCount; i++) {
         const data = particlesData[i];
-        let x = positions[vertexIndex];
-        let y = positions[vertexIndex + 1];
-        let z = positions[vertexIndex + 2];
+        let x = positions[i * 3];
+        let y = positions[i * 3 + 1];
 
-        // 1. Repulsion Logic
-        // Calculate distance from particle to mouse point
-        const dx = x - planeIntersectPoint.x;
-        const dy = y - planeIntersectPoint.y;
-        // Ignore Z for repulsion to make it feel like a cylinder affecting all depths
-        const distSq = dx * dx + dy * dy;
+        // Travel only along the chosen grid axis
+        if (data.axis === 0) x += data.speed;
+        else y += data.speed;
 
-        if (distSq < mouseRepulsionRadius * mouseRepulsionRadius) {
-          const dist = Math.sqrt(distSq);
-          const force = (mouseRepulsionRadius - dist) / mouseRepulsionRadius;
+        // Wrap at viewport bounds
+        if (x < -bounds) x += bounds * 2;
+        else if (x > bounds) x -= bounds * 2;
+        if (y < -bounds) y += bounds * 2;
+        else if (y > bounds) y -= bounds * 2;
 
-          // Push away
-          data.velocity.x += (dx / dist) * force * mouseRepulsionForce;
-          data.velocity.y += (dy / dist) * force * mouseRepulsionForce;
+        // Particle sits exactly on the warped grid surface — follows the well's physics
+        const z = gridZAt(x, y);
+
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+
+        // Trail subdivided into segments; each sample finds its own Z on the warped grid
+        const dirX = data.axis === 0 ? Math.sign(data.speed) : 0;
+        const dirY = data.axis === 1 ? Math.sign(data.speed) : 0;
+        const stepLen = data.trailLen / trailSegments;
+
+        for (let s = 0; s < trailSegments; s++) {
+          const x0 = x - dirX * stepLen * s;
+          const y0 = y - dirY * stepLen * s;
+          const x1 = x - dirX * stepLen * (s + 1);
+          const y1 = y - dirY * stepLen * (s + 1);
+          const base = (i * trailVerts + s * 2) * 3;
+          trailPositions[base + 0] = x0;
+          trailPositions[base + 1] = y0;
+          trailPositions[base + 2] = gridZAt(x0, y0);
+          trailPositions[base + 3] = x1;
+          trailPositions[base + 4] = y1;
+          trailPositions[base + 5] = gridZAt(x1, y1);
         }
-
-        // 2. Apply Velocity
-        x += data.velocity.x;
-        y += data.velocity.y;
-        z += data.velocity.z;
-
-        // 3. Friction (Return to normal speed)
-        // Linearly interpolate current velocity back to original velocity
-        // Reduced factor (0.05 -> 0.02) means they take longer to slow down = smoother
-        data.velocity.x += (data.originalVelocity.x - data.velocity.x) * 0.02;
-        data.velocity.y += (data.originalVelocity.y - data.velocity.y) * 0.02;
-
-        // 4. Boundary Bounce
-        const bounds = 9;
-        const nudge = 0.1; // Small push away from boundary
-
-        // X boundary
-        if (x < -bounds) {
-          x = -bounds + nudge;
-          data.velocity.x = Math.abs(data.velocity.x);
-        } else if (x > bounds) {
-          x = bounds - nudge;
-          data.velocity.x = -Math.abs(data.velocity.x);
-        }
-
-        // Y boundary
-        if (y < -bounds) {
-          y = -bounds + nudge;
-          data.velocity.y = Math.abs(data.velocity.y);
-        } else if (y > bounds) {
-          y = bounds - nudge;
-          data.velocity.y = -Math.abs(data.velocity.y);
-        }
-
-        // Z boundary
-        if (z < -bounds) {
-          z = -bounds + nudge;
-          data.velocity.z = Math.abs(data.velocity.z);
-        } else if (z > bounds) {
-          z = bounds - nudge;
-          data.velocity.z = -Math.abs(data.velocity.z);
-        }
-
-        positions[vertexIndex] = x;
-        positions[vertexIndex + 1] = y;
-        positions[vertexIndex + 2] = z;
-        vertexIndex += 3;
       }
       geometry.attributes.position.needsUpdate = true;
-
-      // --- C. Update Lines ---
-      const linePositions: number[] = [];
-      for (let i = 0; i < particleCount; i++) {
-        for (let j = i + 1; j < particleCount; j++) {
-          const dx = positions[i * 3] - positions[j * 3];
-          const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
-          const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
-          const distSq = dx * dx + dy * dy + dz * dz;
-
-          if (distSq < connectDistance * connectDistance) {
-            // Alpha based on distance (fade out lines)
-            linePositions.push(
-              positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
-              positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
-            );
-          }
-        }
-      }
-      lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-
-      // --- D. Parallax Rotation ---
-      // Gently rotate the whole group based on mouse position
-      // Reduced lerp from 0.05 to 0.01 for heavier, smoother inertia
-      particlesMesh.rotation.y += 0.01 * (mouseX - particlesMesh.rotation.y);
-      particlesMesh.rotation.x += 0.01 * (-mouseY - particlesMesh.rotation.x);
-
-      linesMesh.rotation.y = particlesMesh.rotation.y;
-      linesMesh.rotation.x = particlesMesh.rotation.x;
+      trailGeometry.attributes.position.needsUpdate = true;
 
       renderer.render(scene, camera);
     };
-
     animate();
 
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      bounds = computeBounds();
     };
     window.addEventListener('resize', handleResize);
 
     cleanup(() => {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseleave', onMouseLeave);
       cancelAnimationFrame(animationId);
       geometry.dispose();
       pMaterial.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
+      gridGeometry.dispose();
+      gridMaterial.dispose();
+      trailGeometry.dispose();
+      trailMaterial.dispose();
       renderer.dispose();
-      if (containerRef.value && renderer.domElement && containerRef.value.contains(renderer.domElement)) {
+      if (
+        containerRef.value &&
+        renderer.domElement &&
+        containerRef.value.contains(renderer.domElement)
+      ) {
         containerRef.value.removeChild(renderer.domElement);
       }
     });
-
   }, { strategy: 'document-idle' });
 
   return (
     <div
       ref={containerRef}
-      // z-0 ensures visibility
       class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none bg-[#050505]"
     />
   );
