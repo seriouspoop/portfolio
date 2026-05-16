@@ -3,6 +3,10 @@ meta:
   description: Backend & Systems Engineer using Qwik and Three.js
   theme: dark
 
+github:
+  enabled: true
+  username: seriouspoop
+
 profile:
   component: hero
   name: Harshit Singh
@@ -249,5 +253,3 @@ sections:
             level: adept
           - name: On-prem
             level: advanced
-          
-            

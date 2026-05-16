@@ -8,6 +8,7 @@ import { isTimelineSection, isGridSection, isSkillGridSection } from '../types/c
 import { ExperienceCardComponent } from '../components/experience-card';
 import { ProjectCardComponent } from '../components/project-card';
 import { PortfolioIcon } from '../components/portfolio-icon';
+import { GithubActivitySection } from '../components/github-activity-section';
 import { ArrowUpRightIcon } from 'lucide-qwik';
 
 export default component$(() => {
@@ -64,7 +65,7 @@ export default component$(() => {
         </section>
 
         {/* EXPERIENCE */}
-        <section class={`transition-all duration-1000 delay-200 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <section class={`transition-all duration-1000 delay-300 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           {(() => {
             const experienceSection = portfolioData.sections.find(s => s.id === 'experience');
             if (!experienceSection || !isTimelineSection(experienceSection)) return null;
@@ -82,7 +83,7 @@ export default component$(() => {
         </section>
 
         {/* PROJECTS */}
-        <section class={`transition-all duration-1000 delay-300 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <section class={`transition-all duration-1000 delay-400 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           {(() => {
             const projectsSection = portfolioData.sections.find(s => s.id === 'projects');
             if (!projectsSection || !isGridSection(projectsSection)) return null;
@@ -99,8 +100,15 @@ export default component$(() => {
           })()}
         </section>
 
+        {/* GITHUB ACTIVITY */}
+        {portfolioData.github?.enabled && (
+          <section class={`transition-all duration-1000 delay-200 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <GithubActivitySection />
+          </section>
+        )}
+
         {/* SKILLS */}
-        <section class={`transition-all duration-1000 delay-500 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <section class={`transition-all duration-1000 delay-600 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           {(() => {
             const skillsSection = portfolioData.sections.find(s => s.id === 'skills');
             if (!skillsSection || !isSkillGridSection(skillsSection)) return null;
@@ -132,7 +140,7 @@ export default component$(() => {
         </section>
 
         {/* GAME */}
-        <section class={`transition-all duration-1000 delay-700 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <section class={`transition-all duration-1000 delay-800 transform ${loaded.value ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <SectionTitle>System Maintenance</SectionTitle>
           <div class="w-full">
             <LoadBalancerGame />
