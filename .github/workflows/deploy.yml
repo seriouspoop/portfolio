@@ -3,6 +3,8 @@ name: Deploy Qwik Site to GitHub Pages
 on:
   push:
     branches: ["main"] # Ensure this matches your default branch name
+  schedule:
+    - cron: "0 6 * * *" # daily 06:00 UTC — refreshes GitHub activity snapshot
   workflow_dispatch:
 
 permissions:
@@ -30,6 +32,9 @@ jobs:
         run: bun install
 
       - name: Build Static Site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: seriouspoop
         run: bun run build
 
       # Qwik outputs static files to the 'dist' folder by default
