@@ -14,7 +14,7 @@ export const ThreeBackground = component$(() => {
     const fov = 75;
     const planeSize = 60;
     const planeSegments = 160;
-    const baseGridOpacity = 0.3;
+    const baseGridOpacity = 0.25;
     const glowRadius = 3.0;
     const wellRadius = 2.0;
     const wellDepth = 0.5;
