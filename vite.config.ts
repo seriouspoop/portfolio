@@ -9,6 +9,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 import tailwindcss from "@tailwindcss/vite";
 import { portfolioYamlPlugin } from "./src/plugins/vite-plugin-portfolio-yaml";
+import { githubActivityPlugin } from "./src/plugins/vite-plugin-github-activity";
 type PkgDep = Record<string, string>;
 const { dependencies = {}, devDependencies = {} } = pkg as any as {
   dependencies: PkgDep;
@@ -28,6 +29,7 @@ export default defineConfig(({ command, mode }): UserConfig => {
       tsconfigPaths({ root: "." }),
       tailwindcss(),
       portfolioYamlPlugin(),
+      githubActivityPlugin(),
     ],
     // This tells Vite which dependencies to pre-build in dev mode.
     optimizeDeps: {

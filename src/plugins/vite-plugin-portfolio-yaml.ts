@@ -27,6 +27,19 @@ export function portfolioYamlPlugin(): Plugin {
             throw new Error('Invalid portfolio.yaml: missing required fields (meta, profile, or sections)');
           }
 
+          if (parsedData.github !== undefined) {
+            const g = parsedData.github;
+            if (typeof g !== 'object' || g === null || Array.isArray(g)) {
+              throw new Error('Invalid portfolio.yaml: "github" must be an object');
+            }
+            if (typeof g.enabled !== 'boolean') {
+              throw new Error('Invalid portfolio.yaml: "github.enabled" must be a boolean');
+            }
+            if (g.username !== undefined && typeof g.username !== 'string') {
+              throw new Error('Invalid portfolio.yaml: "github.username" must be a string');
+            }
+          }
+
           const validComponents = [
             'hero', 'timeline', 'grid', 'experience_card',
             'project_card', 'skill_grid', 'contact_section'
