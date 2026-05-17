@@ -21,6 +21,7 @@ export const ThreeBackground = component$(() => {
     const minSpeed = 0.008;
     const maxSpeed = 0.025;
     const particleOpacity = 0.8;
+    const particleSize = 0.07;
     const trailOpacity = 0.7;
     const trailSegments = 4;
 
@@ -155,7 +156,7 @@ export const ThreeBackground = component$(() => {
 
     const pMaterial = new THREE.PointsMaterial({
       color: 0xbcffe8,
-      size: 0.085,
+      size: particleSize,
       transparent: true,
       opacity: particleOpacity,
       blending: THREE.AdditiveBlending,
