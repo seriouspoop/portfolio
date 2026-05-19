@@ -37,9 +37,11 @@ sections:
         location: Bengaluru
         summary: Built production-grade multi-cloud deployment infrastructure reducing customer onboarding time by 96% across AWS, GCP, and air-gapped environments. Delivered 8 components spanning Helm chart libraries, Terraform modules, and hardened Bash automation.
         resume_highlights:
-          - Built multi-cloud deployment infrastructure reducing customer onboarding time by 96%.
-          - Designed centralized Helm chart library orchestrating 15+ microservices across AWS and GCP.
-          - Wrote hardened Bash installers cutting standalone server onboarding from 8 hours to 10 mins.
+          - Designed aurva-helm-commons Helm library orchestrating 15+ microservices with <b>IRSA/Workload Identity federation</b> and AWS Secrets Manager CSI, reducing new environment setup from a Helm expert to editing a single values file.
+          - Built AWS control plane (Terraform + Helm) covering VPC, EKS, RDS, OpenSearch, IAM, S3, and CloudTrail with <b>full air-gapped PrivateLink mode</b>, cutting fresh deployment time from 2-3 days to under 45 minutes.
+          - Authored cross-account, <b>CSPM compatible</b> IAM Terraform module with OIDC-based IRSA federation and aws:SourceVpc conditions, eliminating long-lived credentials and reducing a 2-3 hour manual setup to a 5-minute terraform apply.
+          - Deployed GCP data plane with Workload Identity, GCS bucket provisioning, and optional tainted node pool attachment to existing GKE clusters, enabling <b>multi-cloud support</b> without per-customer manual playbooks.
+          - Wrote <b>hardened Bash installers</b> for eBPF collector, DBProxy, and PostgreSQL 18 with preflight checks, retry/backoff, rollback, and CDN/air-gapped paths — cutting standalone server onboarding from 4-8 hours to under 10 minutes.
         tech: [Terraform, Helm, Kubernetes, AWS, GCP, Bash, eBPF]
         details:
           - Designed aurva-helm-commons, a centralized Helm chart library orchestrating 15+ microservices across any Kubernetes cluster with IRSA/Workload Identity federation and AWS Secrets Manager CSI integration — reducing new environment deployment from requiring a Helm expert to editing a single values file.
@@ -59,9 +61,11 @@ sections:
         location: Germany
         summary: Architected real-time SSH connection pooling achieving 115% performance boost (8K to 17K req/s). Built gRPC gateway layer for hardware communication and led full-stack OpenTelemetry instrumentation cutting debugging time by 40%.
         resume_highlights:
-          - Architected SSH connection pooling achieving 115% performance boost (8K to 17K req/s).
-          - Built high-throughput gateway layer with gRPC streams for hardware communication.
-          - Led full-stack OpenTelemetry instrumentation cutting system debugging time by 40%.
+          - Architected <b>SSH connection pooling</b> for remote Linux servers, achieving <b>115% throughput improvement</b> (8K → 17K req/s) while significantly reducing per-request resource overhead.
+          - Built high-throughput gRPC gateway layer with <b>bidirectional streams</b> for hardware communication and efficient API-to-Linux command translation across distributed infrastructure.
+          - Led full OpenTelemetry instrumentation for <b>distributed tracing</b> and metrics collection, <b>reducing system debugging time by 40%</b> and improving production observability.
+          - Standardized protobuf and gRPC best practices across engineering teams, improving code maintainability, accelerating development velocity, and reducing integration complexity.
+          - Optimized system architecture for high-availability deployments, maintaining consistent <b>99.9% uptime</b> across production environments under sustained peak traffic loads.
         tech: [Go, gRPC, OpenTelemetry, Protobuf]
         details:
           - Architected and implemented real-time SSH connection pooling system for remote Linux servers, achieving 115% performance improvement (8K to 17K requests/sec) and reducing resource overhead.
@@ -81,10 +85,12 @@ sections:
         location: Remote
         summary: Engineered Redis-based distributed caching cutting database load by 40%. Designed RabbitMQ event-driven architecture improving reliability by 30% and built Docker Swarm orchestration reducing service downtime by 50%.
         resume_highlights:
-          - Engineered Redis-based distributed caching system reducing database load by 40%.
-          - Designed RabbitMQ event-driven architecture improving system reliability by 30%.
-          - Orchestrated Docker Swarm deployment achieving 50% reduction in service downtime.
-        tech: [Go, Redis, RabbitMQ, Docker, gRPC]
+          - Engineered Redis-based <b>distributed caching</b> with intelligent invalidation strategies, cutting database load by 40% and significantly improving application response times.
+          - Designed RabbitMQ <b>event-driven architecture</b> improving system reliability by 30% through decoupled logging, mailing, and notification services across microservices.
+          - Orchestrated Docker Swarm microservices deployment with <b>automated health checks</b>, achieving 50% reduction in service downtime during critical deployments and updates.
+          - Developed gRPC protocols with auto-generated client-server stubs and connection pooling, improving inter-service communication efficiency by 20% and reducing latency.
+          - Built Go <b>cron scheduling module</b> for incremental billing and URL crawling tasks, increasing scheduling accuracy by 25% and eliminating manual operational intervention.
+        tech: [Go, Redis, RabbitMQ, Docker Swarm, gRPC]
         details:
           - Engineered comprehensive Redis-based distributed caching system with intelligent cache invalidation strategies, reducing database load by 40% and significantly improving application response times.
           - Designed and implemented robust event-driven architecture using RabbitMQ message queues, increasing overall system reliability by 30% through decoupled logging, mailing, and notification services.
@@ -133,7 +139,8 @@ sections:
         tech: [Bash, Linux, CI/CD]
 
       - component: project_card
-        include_in_resume: false
+        include_in_resume: true
+        resume_priority: 4
         clickable: true
         interaction: modal
         name: AlgoBench

@@ -444,11 +444,11 @@
                 },
                 "resume_highlights": {
                     "type": "array",
-                    "description": "Key highlights for resume (max 2-3 bullet points)",
+                    "description": "Key highlights for resume (max 6 bullet points)",
                     "items": {
                         "type": "string"
                     },
-                    "maxItems": 3
+                    "maxItems": 6
                 }
             }
         },

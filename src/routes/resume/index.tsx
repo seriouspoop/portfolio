@@ -18,7 +18,7 @@ export default component$(() => {
     ? projectsSection.items
         .filter(p => p.include_in_resume === true)
         .sort((a, b) => (a.resume_priority || 99) - (b.resume_priority || 99))
-        .slice(0, 3) // Max 3 projects
+        .slice(0, 4) // Max 4 projects
     : [];
 
   return (
@@ -115,7 +115,7 @@ export default component$(() => {
                 {/* Experience Section */}
                 {resumeExperience.length > 0 && (
                   <section class="mb-8 print:mb-4">
-                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
+                    <h2 class="text-[0.9rem] print:text-[0.6rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Professional Experience
                     </h2>
                     <div class="space-y-6 print:space-y-3">
@@ -123,10 +123,10 @@ export default component$(() => {
                         <div key={idx} class="mb-4 print:mb-1.5 break-inside-avoid">
                           {/* Job Title and Period */}
                           <div class="flex justify-between items-baseline mb-0.5 gap-4">
-                            <h3 class="text-[1.05rem] print:text-[0.9rem] font-bold text-gray-900 leading-tight">
+                            <h3 class="text-[1.05rem] print:text-[0.8rem] font-bold text-gray-900 leading-tight">
                               {job.role}
                             </h3>
-                            <span class="text-sm print:text-[0.75rem] text-gray-500 whitespace-nowrap font-bold">
+                            <span class="text-sm print:text-[0.7rem] text-gray-500 whitespace-nowrap font-bold">
                               {job.period}
                             </span>
                           </div>
@@ -156,16 +156,16 @@ export default component$(() => {
                           
                           {/* Summary/Highlights */}
                           {job.resume_highlights ? (
-                            <ul class="list-none space-y-1 print:space-y-0.5 mb-2 print:mb-1.5 text-[0.875rem] print:text-[0.75rem] text-gray-600">
+                            <ul class="list-none space-y-1 print:space-y-0.5 mb-2 print:mb-1.5 text-[0.875rem] print:text-[0.7rem] text-gray-600">
                               {job.resume_highlights.map((highlight, hIdx) => (
                                 <li key={hIdx} class="flex items-start gap-2.5 print:gap-1.5">
-                                  <span class="text-emerald-500 font-black mt-1 print:mt-0.5 text-[10px] print:text-[7px]">▶</span>
-                                  <span class="leading-relaxed">{highlight}</span>
+                                  <span class="text-emerald-500 font-black mt-1 print:mt-1 text-[10px] print:text-[7px]">▶</span>
+                                  <span class="leading-relaxed" dangerouslySetInnerHTML={highlight} />
                                 </li>
                               ))}
                             </ul>
                           ) : (
-                            <p class="text-[0.925rem] print:text-[0.75rem] text-gray-700 mb-2 print:mb-1.5 leading-relaxed font-medium">
+                            <p class="text-[0.925rem] print:text-[0.7rem] text-gray-700 mb-2 print:mb-1.5 leading-relaxed font-medium">
                               {job.resume_summary || job.summary}
                             </p>
                           )}
@@ -190,17 +190,17 @@ export default component$(() => {
                 {/* Projects Section */}
                 {resumeProjects.length > 0 && (
                   <section class="mb-8 print:mb-4">
-                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
+                    <h2 class="text-[0.9rem] print:text-[0.6rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Key Projects
                     </h2>
-                    <div class="grid grid-cols-1 gap-3 print:gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 print:grid-cols-2 print:gap-x-4 print:gap-y-2">
                       {resumeProjects.map((project, idx) => (
                         <div key={idx} class="break-inside-avoid">
-                          <div class="flex justify-between items-baseline mb-1 print:mb-0.5">
-                            <h3 class="text-base print:text-[0.9rem] font-bold text-gray-900">
+                          <div class="flex justify-between items-baseline mb-1 print:mb-0.5 gap-2">
+                            <h3 class="text-base print:text-[0.7rem] font-bold text-gray-900 leading-tight">
                               {project.name}
                             </h3>
-                            <div class="flex gap-3 print:gap-1.5 text-ms print:text-[0.75rem] font-bold uppercase tracking-tighter">
+                            <div class="flex gap-2 print:gap-1 text-ms print:text-[0.6rem] font-bold uppercase tracking-tighter shrink-0">
                               {project.links?.map((link, lIdx) => (
                                 <a
                                   key={lIdx}
@@ -214,12 +214,12 @@ export default component$(() => {
                               ))}
                             </div>
                           </div>
-                          
-                          <p class="text-sm print:text-[0.75rem] text-gray-700 mb-2 print:mb-1 leading-relaxed">
+
+                          <p class="text-sm print:text-[0.65rem] text-gray-700 mb-2 print:mb-1 leading-relaxed">
                             <span class="font-bold text-gray-900 mr-1">{project.tagline}:</span>
                             {project.summary}
                           </p>
-                          
+
                           <div class="flex flex-wrap gap-1.5 print:gap-1">
                             {project.tech.slice(0, 6).map((tech, tIdx) => (
                               <span
@@ -239,7 +239,7 @@ export default component$(() => {
                 {/* Skills Section */}
                 {skillsSection && isSkillGridSection(skillsSection) && (
                   <section class="mb-8 print:mb-4">
-                    <h2 class="text-[0.9rem] print:text-[0.8rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
+                    <h2 class="text-[0.9rem] print:text-[0.6rem] font-bold text-gray-900 border-b border-gray-200 pb-0.5 mt-3 mb-1.5 tracking-widest uppercase print:mt-1 print:mb-1 break-after-avoid">
                       Technical Skills
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-12 print:gap-x-8 gap-y-3 print:gap-y-1.5">
